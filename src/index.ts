@@ -2,11 +2,8 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 
-// Importar explícitamente todos los estilos
-import './styles/globals.css';
-import './styles/presentation.css';
-import './styles/requirements.css';
-import './styles/integration.css';
+// ESTILOS CONSOLIDADOS: Ya no se importan CSS individuales
+// Todos los estilos están consolidados en microfrontend-styles.ts
 
 // MODO DUAL: React Development + Web Component Production
 if (typeof window !== 'undefined') {

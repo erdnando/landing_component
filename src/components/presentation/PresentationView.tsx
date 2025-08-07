@@ -1,4 +1,3 @@
-import '../../styles/presentation.css';
 import React from 'react';
 
 interface PresentationViewProps {

@@ -1,8 +1,6 @@
 import React from 'react';
-import './styles/globals.css';
-import './styles/presentation.css';
-import './styles/requirements.css';
-import './styles/integration.css';
+// ESTILOS CONSOLIDADOS: Ya no se importan CSS individuales
+// Todos los estilos están consolidados en microfrontend-styles.ts
 import { AppProvider, useAppContext } from './core/context/AppContext';
 import PresentationView from './components/presentation/PresentationView';
 import RequirementsView from './components/requirements/RequirementsView';

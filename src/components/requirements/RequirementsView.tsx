@@ -1,5 +1,6 @@
-import '../../styles/requirements.css';
 import React from 'react';
+// ESTILOS CONSOLIDADOS: Ya no se importan CSS individuales
+// Todos los estilos están consolidados en microfrontend-styles.ts
 
 interface RequirementsViewProps {
   onBack: () => void;

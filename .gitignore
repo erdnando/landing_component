@@ -56,5 +56,3 @@ public/benefits-grid-test*
 
 # Development artifacts
 localhost-*.log
-server.js
-build-and-serve.js

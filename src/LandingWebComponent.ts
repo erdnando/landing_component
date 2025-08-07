@@ -2,18 +2,10 @@ import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import App from './App';
 
-// IMPORTAR TODOS LOS ESTILOS EXPLÍCITAMENTE para que webpack los incluya
-import './styles/globals.css';
-import './styles/presentation.css';
-import './styles/requirements.css';
+// ESTILOS CONSOLIDADOS: Ya no se importan CSS individuales
+// Todos los estilos están consolidados en microfrontend-styles.ts
 
-// Importar bundle consolidado de estilos
-import { getBundledStyles, CRITICAL_STYLES, injectCriticalStyles } from './styles/style-bundle';
-
-// Importar la función de inyección de estilos críticos (opcional como fallback)
-// import { injectShadowStyles } from './utils/styleInjector';
-
-// NUEVO: Importar estilos consolidados para microfrontend
+// Importar la función de inyección de estilos consolidados
 import { injectMicrofrontendStyles, getAllMicrofrontendStyles, MICROFRONTEND_METADATA } from './styles/microfrontend-styles';
 
 // CAPTURAR ESTILOS COMPILADOS POR WEBPACK
@@ -73,8 +65,8 @@ function getAllCompiledStyles(): string {
 }
 
 /**
- * Obtiene todos los estilos críticos embebidos
- * ACTUALIZADO: Ahora usa el punto único de verdad para microfrontend
+ * Obtiene todos los estilos críticos consolidados
+ * ACTUALIZADO: Ahora usa exclusivamente el punto único de verdad para microfrontend
  */
 function getCriticalEmbeddedStyles(): string {
   return getAllMicrofrontendStyles();
@@ -136,11 +128,8 @@ class LandingWebComponent extends HTMLElement {
     
     // SOLUCIÓN CONSOLIDADA: Una sola inyección de estilos
     try {
-      // 1. Inyectar estilos consolidados del microfrontend PRIMERO
+      // Inyectar estilos consolidados del microfrontend
       injectMicrofrontendStyles(shadow);
-      
-      // 2. Inyectar estilos críticos del bundle como fallback
-      injectCriticalStyles(shadow);
       
       console.log('🎨 Microfrontend Styles - Consolidados cargados:', MICROFRONTEND_METADATA);
     } catch (e) {
@@ -151,13 +140,7 @@ class LandingWebComponent extends HTMLElement {
     const masterStyleContainer = document.createElement('div');
     masterStyleContainer.id = 'landing-master-styles';
     
-    // 4. Agregar estilos del bundle webpack
-    const bundledStylesElement = document.createElement('style');
-    bundledStylesElement.id = 'landing-webpack-styles';
-    bundledStylesElement.textContent = getBundledStyles() + '\n' + CRITICAL_STYLES;
-    masterStyleContainer.appendChild(bundledStylesElement);
-    
-    // 5. Agregar estilos compilados por webpack y embebidos
+    // 4. Agregar estilos consolidados
     const consolidatedStyles = document.createElement('style');
     consolidatedStyles.id = 'landing-consolidated-styles';
     consolidatedStyles.textContent = getAllCompiledStyles();
@@ -187,8 +170,6 @@ class LandingWebComponent extends HTMLElement {
     // 3. Logging para debugging
     console.log('🎨 Landing Component - Estilos cargados:', {
       microfrontendStylesConsolidated: true,
-      bundledStyles: getBundledStyles().length > 0,
-      criticalStyles: CRITICAL_STYLES.length,
       consolidatedStyles: getAllCompiledStyles().length,
       masterStylesCount: masterStyleContainer.children.length,
       architecture: MICROFRONTEND_METADATA.architecture
