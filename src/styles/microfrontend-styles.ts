@@ -32,7 +32,7 @@ body {
 #root {
   margin: 0 !important;
   padding: 0 !important;
-  min-height: 100vh !important;
+  min-height: 100% !important;
   background-color: #f5f5f5 !important;
   display: flex !important;
   justify-content: center !important;
@@ -53,7 +53,7 @@ body {
   display: block !important;
   width: 100% !important;
   max-width: 375px !important;
-  height: 100vh !important;
+  height: 100% !important;
   min-height: min(600px, 100vh) !important;
   margin: 0 auto !important;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -77,8 +77,8 @@ h1, h2, h3, h4, h5, h6, p, span, div, button, input, a, ul, ol, li {
 .app {
   width: 100% !important;
   max-width: 375px !important;
-  height: 100vh !important;
-  min-height: min(600px, 100vh) !important;
+  height: 100% !important;
+  min-height: min(600px, 100%) !important;
   background: #e91e63 !important;
   margin: 0 auto !important;
   position: relative !important;
@@ -232,7 +232,7 @@ export const PRESENTATION_STYLES = `
   overflow: visible !important;
   padding: 0 !important;
   grid-auto-rows: minmax(54px, auto) !important; /* Aumentamos la altura mínima */
-  max-height: none !important;
+  max-height: 200px !important;
   justify-content: center !important; /* Centrar en horizontal */
 }
 
@@ -745,7 +745,7 @@ export const PRESENTATION_STYLES = `
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  margin: 15px auto !important;
+  margin: 5px auto !important;
   padding: 8px 14px !important;
   border-radius: 20px !important;
   background: rgba(0, 0, 0, 0.15) !important;
@@ -776,7 +776,7 @@ export const PRESENTATION_STYLES = `
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  margin: 15px 0 !important;
+  margin: 0px 0 !important;
   position: relative !important;
   z-index: 1 !important;
 }
@@ -917,8 +917,8 @@ export const REQUIREMENTS_STYLES = `
   background: linear-gradient(to bottom, #ffffff, #f8f8f8) !important;
   color: #333333 !important;
   padding: 14px !important;
-  height: 100vh !important;
-  min-height: min(600px, 100vh) !important;
+  height: 100% !important;  //<--------------------------
+  min-height: min(600px, 100%) !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
@@ -1093,7 +1093,7 @@ export const REQUIREMENTS_STYLES = `
 
 /* Contenedor de botones moderno */
 .requirements-footer {
-  margin-top: auto !important;
+  margin-top: 185px !important;
   padding-top: 20px !important;
 }
 

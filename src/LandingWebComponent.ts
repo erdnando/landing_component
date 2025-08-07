@@ -250,6 +250,7 @@ class LandingWebComponent extends HTMLElement {
       overflow: auto !important;
       background-color: var(--primary-color, #e91e63) !important;
       color: white !important;
+      
     `;
     mountWrapper.appendChild(this.mountPoint);
     mountWrapper.part = 'container'; // Expose for external styling
