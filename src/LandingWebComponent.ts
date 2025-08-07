@@ -1,12 +1,185 @@
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import App from './App';
-// Importar los estilos para que webpack los incluya en el bundle
+
+// IMPORTAR TODOS LOS ESTILOS EXPLÍCITAMENTE para que webpack los incluya
 import './styles/globals.css';
 import './styles/presentation.css';
 import './styles/requirements.css';
+
+// Importar bundle consolidado de estilos
+import { getBundledStyles, CRITICAL_STYLES, injectCriticalStyles } from './styles/style-bundle';
+
 // Importar la función de inyección de estilos críticos
 import { injectShadowStyles } from './utils/styleInjector';
+
+// CAPTURAR ESTILOS COMPILADOS POR WEBPACK
+let webpackCompiledStyles: string = '';
+try {
+  // Capturar estilos durante el proceso de build
+  if (typeof window !== 'undefined' && (window as any).__LANDING_STYLES__) {
+    webpackCompiledStyles = (window as any).__LANDING_STYLES__;
+  }
+} catch (e) {
+  console.warn('Could not load webpack compiled styles:', e);
+}
+
+/**
+ * Función para consolidar TODOS los estilos del componente
+ * Combina estilos embebidos, webpack y externos
+ */
+function getAllCompiledStyles(): string {
+  let allStyles = '';
+  
+  // 1. Estilos críticos embebidos
+  allStyles += getCriticalEmbeddedStyles();
+  
+  // 2. Estilos compilados por webpack (si están disponibles)
+  if (webpackCompiledStyles) {
+    allStyles += '\n' + webpackCompiledStyles;
+  }
+  
+  // 3. Estilos guardados por webpack en window
+  if (typeof window !== 'undefined') {
+    if ((window as any)._landingComponentStyles) {
+      allStyles += '\n' + (window as any)._landingComponentStyles.join('\n');
+    }
+    if ((window as any)._landingCriticalStyles) {
+      allStyles += '\n' + (window as any)._landingCriticalStyles;
+    }
+  }
+  
+  // 4. Capturar estilos del DOM si están disponibles
+  try {
+    document.querySelectorAll('style').forEach(styleElement => {
+      const content = styleElement.textContent || '';
+      if (content.includes('landing-component') || 
+          content.includes('benefits-grid-modern') ||
+          content.includes('credit-card') ||
+          content.includes('benefit-icon-wrapper') ||
+          content.includes('presentation-view') ||
+          content.includes('requirements-view')) {
+        allStyles += '\n' + content;
+      }
+    });
+  } catch (e) {
+    console.warn('Error capturing DOM styles:', e);
+  }
+  
+  return allStyles;
+}
+
+/**
+ * Obtiene todos los estilos críticos embebidos
+ */
+function getCriticalEmbeddedStyles(): string {
+  return `
+    /* Reset básico para el componente */
+    *, *::before, *::after {
+      margin: 0 !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+      font-family: inherit !important;
+    }
+    
+    /* Estilos base del componente */
+    .landing-component-container {
+      all: initial !important;
+      display: block !important;
+      width: 100% !important;
+      max-width: 375px !important;
+      min-height: 600px !important;
+      margin: 0 auto !important;
+      font-family: Arial, Helvetica, sans-serif !important;
+      color: white !important;
+      background-color: #e91e63 !important;
+      overflow: auto !important;
+      position: relative !important;
+    }
+
+    /* Tarjeta de crédito moderna */
+    .credit-card {
+      width: 180px !important;
+      height: 110px !important;
+      background: linear-gradient(135deg, #2c2c2c, #1a1a1a) !important;
+      border-radius: 12px !important;
+      padding: 12px !important;
+      position: relative !important;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.1) !important;
+      overflow: hidden !important;
+      border: 1px solid rgba(255, 255, 255, 0.05) !important;
+      margin: 18px auto !important;
+      display: block !important;
+    }
+
+    /* Beneficios grid con iconos */
+    .benefits-grid-modern {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      grid-gap: 12px !important;
+      margin: 0 auto 18px !important;
+      width: 92% !important;
+      position: relative !important;
+      z-index: 1 !important;
+      flex-grow: 1 !important;
+      align-content: center !important;
+    }
+
+    .benefit-card-modern {
+      display: flex !important;
+      align-items: center !important;
+      background: rgba(255, 255, 255, 0.15) !important;
+      border-radius: 12px !important;
+      padding: 12px !important;
+      text-align: left !important;
+      height: 100% !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+      backdrop-filter: blur(5px) !important;
+      transition: transform 0.2s, background 0.2s !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      min-height: 70px !important;
+    }
+
+    .benefit-icon-wrapper {
+      width: 36px !important;
+      height: 36px !important;
+      min-width: 36px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: white !important;
+      border-radius: 50% !important;
+      margin-right: 10px !important;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+      transition: all 0.3s ease !important;
+      flex-shrink: 0 !important;
+    }
+
+    .benefit-value {
+      font-size: 24px !important;
+      font-weight: 700 !important;
+      color: #e91e63 !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      line-height: 1.2 !important;
+    }
+
+    .benefit-percent {
+      font-size: 28px !important;
+      font-weight: 700 !important;
+      background: linear-gradient(135deg, #e91e63, #f06292) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      line-height: 1.2 !important;
+    }
+  `;
+}
 
 /**
  * Web Component wrapper para nuestro LandingComponent
@@ -62,33 +235,61 @@ class LandingWebComponent extends HTMLElement {
     this.mountPoint = document.createElement('div');
     this.mountPoint.className = 'landing-component-container';
     
-    // SOLUCIÓN: Inyectar estilos críticos específicos que se pierden en la integración
+    // SOLUCIÓN MEJORADA: Consolidar TODOS los estilos posibles
     try {
+      // 1. Inyectar estilos críticos del bundle PRIMERO
+      injectCriticalStyles(shadow);
+      
+      // 2. Inyectar estilos específicos del styleInjector
       injectShadowStyles(shadow);
     } catch (e) {
       console.warn('Error inyectando estilos críticos:', e);
     }
     
-    // Importar estilos explícitamente del DOM si están disponibles
+    // 3. Crear contenedor consolidado de estilos
+    const masterStyleContainer = document.createElement('div');
+    masterStyleContainer.id = 'landing-master-styles';
+    
+    // 4. Agregar estilos del bundle webpack
+    const bundledStylesElement = document.createElement('style');
+    bundledStylesElement.id = 'landing-webpack-styles';
+    bundledStylesElement.textContent = getBundledStyles() + '\n' + CRITICAL_STYLES;
+    masterStyleContainer.appendChild(bundledStylesElement);
+    
+    // 5. Agregar estilos compilados por webpack y embebidos
+    const consolidatedStyles = document.createElement('style');
+    consolidatedStyles.id = 'landing-consolidated-styles';
+    consolidatedStyles.textContent = getAllCompiledStyles();
+    masterStyleContainer.appendChild(consolidatedStyles);
+    
+    // 6. Capturar estilos del DOM principal si están disponibles
     try {
-      // Capturar estilos globales y añadirlos al Shadow DOM
-      document.querySelectorAll('style').forEach(styleElement => {
-        if (styleElement.id === 'landing-component-styles' || 
-            styleElement.textContent?.includes('landing-component') ||
-            styleElement.textContent?.includes('benefits-grid-modern')) {
-          shadow.appendChild(styleElement.cloneNode(true));
+      document.querySelectorAll('style, link[rel="stylesheet"]').forEach(element => {
+        if (element.tagName === 'STYLE') {
+          const content = element.textContent || '';
+          if (content.includes('landing-component') || 
+              content.includes('benefits-grid-modern') ||
+              content.includes('credit-card') ||
+              content.includes('benefit-icon-wrapper') ||
+              content.includes('presentation-view') ||
+              content.includes('requirements-view')) {
+            const clonedStyle = element.cloneNode(true) as HTMLStyleElement;
+            clonedStyle.id = `cloned-${Date.now()}-${Math.random()}`;
+            masterStyleContainer.appendChild(clonedStyle);
+          }
         }
       });
-      
-      // También buscar estilos guardados por webpack
-      if (typeof window !== 'undefined' && (window as any)._landingComponentStyles) {
-        const webpackStyles = document.createElement('style');
-        webpackStyles.textContent = (window as any)._landingComponentStyles.join('\n');
-        shadow.appendChild(webpackStyles);
-      }
     } catch (e) {
       console.warn('Error copying external styles:', e);
     }
+    
+    // 7. Logging para debugging
+    console.log('🎨 Landing Component - Estilos cargados:', {
+      bundledStyles: getBundledStyles().length > 0,
+      criticalStyles: CRITICAL_STYLES.length,
+      consolidatedStyles: getAllCompiledStyles().length,
+      masterStylesCount: masterStyleContainer.children.length
+    });
     
     // Insertamos un CSS Reset completo para evitar cualquier estilo heredado
     const cssReset = document.createElement('style');
@@ -578,16 +779,151 @@ class LandingWebComponent extends HTMLElement {
         z-index: 1 !important;
       }
       
-      /* Asegurar que los botones mantengan su estilo */
-      .buttons-container button,
-      .buttons-container .btn,
-      .buttons-container .btn-primary,
-      .buttons-container .btn-secondary {
-        width: 80% !important;
-        max-width: 250px !important;
-        margin: 8px auto !important;
-        display: block !important;
+      /* Contenedor de la tarjeta con efecto 3D */
+      .card-image-container {
+        margin: 18px 0 !important;
+        perspective: 1000px !important;
+        position: relative !important;
+        z-index: 1 !important;
+      }
+
+      .card-image {
+        margin: 0 auto !important;
+        display: flex !important;
+        justify-content: center !important;
+        transform-style: preserve-3d !important;
+        transition: transform 0.5s !important;
+      }
+
+      .card-image:hover {
+        transform: rotateY(5deg) rotateX(5deg) !important;
+      }
+
+      .credit-card {
+        width: 180px !important;
+        height: 110px !important;
+        background: linear-gradient(135deg, #2c2c2c, #1a1a1a) !important;
+        border-radius: 12px !important;
+        padding: 12px !important;
+        position: relative !important;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.1) !important;
+        overflow: hidden !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+      }
+
+      .card-brand {
+        color: white !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+        position: absolute !important;
+        bottom: 15px !important;
+        left: 15px !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+      }
+
+      .card-chip {
+        width: 28px !important;
+        height: 22px !important;
+        background: linear-gradient(45deg, #ffd700, #ffaa00) !important;
+        border-radius: 4px !important;
+        position: absolute !important;
+        top: 25px !important;
+        left: 15px !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+      }
+
+      .card-shine {
+        position: absolute !important;
+        top: -50% !important;
+        left: -50% !important;
+        width: 200% !important;
+        height: 200% !important;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(255, 255, 255, 0.2) 0%,
+          rgba(255, 255, 255, 0) 60%
+        ) !important;
+        transform: rotate(30deg) !important;
+        pointer-events: none !important;
+      }
+
+      /* Beneficios en formato grid moderno */
+      .benefits-grid-modern {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        grid-gap: 12px !important;
+        margin: 0 auto 18px !important;
+        width: 92% !important;
+        position: relative !important;
+        z-index: 1 !important;
+        flex-grow: 1 !important;
+        align-content: center !important;
+      }
+
+      .benefit-card-modern {
+        display: flex !important;
+        align-items: center !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        border-radius: 12px !important;
+        padding: 12px !important;
+        text-align: left !important;
+        height: 100% !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+        backdrop-filter: blur(5px) !important;
+        transition: transform 0.2s, background 0.2s !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        min-height: 70px !important;
+      }
+
+      .benefit-card-modern:hover {
+        transform: translateY(-2px) !important;
+        background: rgba(255, 255, 255, 0.2) !important;
+      }
+
+      .benefit-card-modern.highlight {
+        background: rgba(255, 255, 255, 0.22) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      }
+
+      .benefit-icon-wrapper {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: white !important;
+        border-radius: 50% !important;
+        margin-right: 10px !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+      }
+
+      .benefit-percent,
+      .benefit-value,
+      .benefit-icon {
+        font-size: 18px !important;
+        font-weight: bold !important;
+        color: #e91e63 !important;
         text-align: center !important;
+      }
+
+      .benefit-desc {
+        flex: 1 !important;
+      }
+
+      .benefit-desc strong {
+        font-size: 13px !important;
+        font-weight: bold !important;
+        display: block !important;
+        line-height: 1.3 !important;
+        letter-spacing: -0.3px !important;
+      }
+
+      .benefit-desc p {
+        font-size: 11px !important;
+        line-height: 1.2 !important;
+        margin-top: 2px !important;
+        opacity: 0.9 !important;
       }
     `;
     
@@ -893,37 +1229,178 @@ class LandingWebComponent extends HTMLElement {
         padding: 20px !important;
       }
       
-      /* Botones */
-      .presentation-view .btn-primary {
-        background: white !important;
-        color: #e91e63 !important;
-        display: inline-block !important;
-        padding: 12px 24px !important;
-        border: none !important;
-        border-radius: 25px !important;
+      /* Tarjeta de crédito moderna */
+      .credit-card {
+        width: 180px !important;
+        height: 110px !important;
+        background: linear-gradient(135deg, #2c2c2c, #1a1a1a) !important;
+        border-radius: 12px !important;
+        padding: 12px !important;
+        position: relative !important;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.1) !important;
+        overflow: hidden !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        margin: 18px auto !important;
+        display: block !important;
+      }
+
+      .card-brand {
+        color: white !important;
+        font-size: 16px !important;
         font-weight: bold !important;
-        text-transform: uppercase !important;
-        cursor: pointer !important;
-        text-align: center !important;
-        width: 80% !important;
-        max-width: 250px !important;
-        margin: 10px auto !important;
+        position: absolute !important;
+        bottom: 15px !important;
+        left: 15px !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+      }
+
+      .card-chip {
+        width: 28px !important;
+        height: 22px !important;
+        background: linear-gradient(45deg, #ffd700, #ffaa00) !important;
+        border-radius: 4px !important;
+        position: absolute !important;
+        top: 25px !important;
+        left: 15px !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+      }
+
+      .card-shine {
+        position: absolute !important;
+        top: -50% !important;
+        left: -50% !important;
+        width: 200% !important;
+        height: 200% !important;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(255, 255, 255, 0.2) 0%,
+          rgba(255, 255, 255, 0) 60%
+        ) !important;
+        transform: rotate(30deg) !important;
+        pointer-events: none !important;
       }
       
-      .presentation-view .btn-secondary {
-        background: transparent !important;
-        color: white !important;
-        border: 1px solid white !important;
-        display: inline-block !important;
-        padding: 12px 24px !important;
-        border-radius: 25px !important;
+      /* Beneficios grid con iconos */
+      .benefits-grid-modern {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        grid-gap: 12px !important;
+        margin: 0 auto 18px !important;
+        width: 92% !important;
+        position: relative !important;
+        z-index: 1 !important;
+        flex-grow: 1 !important;
+        align-content: center !important;
+      }
+
+      .benefit-card-modern {
+        display: flex !important;
+        align-items: center !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        border-radius: 12px !important;
+        padding: 12px !important;
+        text-align: left !important;
+        height: 100% !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+        backdrop-filter: blur(5px) !important;
+        transition: transform 0.2s, background 0.2s !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        min-height: 70px !important;
+      }
+
+      .benefit-icon-wrapper {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: white !important;
+        border-radius: 50% !important;
+        margin-right: 10px !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+      }
+
+      .benefit-percent,
+      .benefit-value,
+      .benefit-icon {
+        font-size: 18px !important;
         font-weight: bold !important;
-        text-transform: uppercase !important;
-        cursor: pointer !important;
+        color: #e91e63 !important;
         text-align: center !important;
-        width: 80% !important;
-        max-width: 250px !important;
-        margin: 10px auto !important;
+      }
+
+      .benefit-desc {
+        flex: 1 !important;
+      }
+
+      .benefit-desc strong {
+        font-size: 13px !important;
+        font-weight: bold !important;
+        display: block !important;
+        line-height: 1.3 !important;
+        letter-spacing: -0.3px !important;
+        color: white !important;
+      }
+
+      .benefit-desc p {
+        font-size: 11px !important;
+        line-height: 1.2 !important;
+        margin-top: 2px !important;
+        opacity: 0.9 !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+      }
+
+      /* Enhanced benefit icon styles */
+      .benefit-percent {
+        font-size: 28px !important;
+        font-weight: 700 !important;
+        background: linear-gradient(135deg, #e91e63, #f06292) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        line-height: 1.2 !important;
+        text-shadow: none !important;
+      }
+
+      .benefit-value {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #e91e63 !important;
+        text-shadow: none !important;
+        display: inline-block !important;
+        text-align: center !important;
+        line-height: 1.2 !important;
+        vertical-align: middle !important;
+        /* Asegurar que el texto sea siempre visible */
+        -webkit-text-fill-color: #e91e63 !important;
+        background: none !important;
+        background-clip: initial !important;
+        -webkit-background-clip: initial !important;
+      }
+
+      /* Additional enhanced benefit icon wrapper styles */
+      .benefit-icon-wrapper {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: white !important;
+        border-radius: 50% !important;
+        margin-right: 10px !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+        transition: all 0.3s ease !important;
+        flex-shrink: 0 !important;
+      }
+
+      .benefit-icon-wrapper:hover {
+        transform: scale(1.1) !important;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
       }
       `;
       
@@ -944,6 +1421,10 @@ class LandingWebComponent extends HTMLElement {
       styleContainer.appendChild(requirementsStyles);
     }
     
+    // 5. Agregar primero el contenedor maestro de estilos consolidados
+    shadow.appendChild(masterStyleContainer);
+    
+    // 6. Luego agregar el contenedor de estilos tradicional como fallback
     shadow.appendChild(styleContainer);
     
     // Contenedor para el punto de montaje con estilos inline completos

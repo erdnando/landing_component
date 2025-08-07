@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Benefit Icon - Landing Component</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        
+        .test-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        h3 {
+            color: #e91e63;
+            margin-bottom: 10px;
+        }
+        
+        .debug-info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+            background: #f8f8f8;
+            padding: 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h2>🧪 Test de .benefit-icon</h2>
+        
+        <div class="test-section">
+            <h3>1. Componente Web Landing</h3>
+            <landing-web-component></landing-web-component>
+            <div class="debug-info">
+                El componente debería cargar con iconos visibles en los beneficios
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>2. Test Manual de Estilos</h3>
+            <div style="display: flex; align-items: center; margin: 10px 0; padding: 12px; background: rgba(233,30,99,0.1); border-radius: 8px;">
+                <div style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: white; border-radius: 50%; margin-right: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
+                    <span style="font-size: 18px; font-weight: bold; color: #e91e63; text-align: center;">%</span>
+                </div>
+                <div>
+                    <strong>Porcentaje Manual</strong>
+                    <p style="margin: 2px 0; font-size: 12px;">Este debería verse igual al del componente</p>
+                </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; margin: 10px 0; padding: 12px; background: rgba(233,30,99,0.1); border-radius: 8px;">
+                <div style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: white; border-radius: 50%; margin-right: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
+                    <span style="font-size: 18px; font-weight: bold; color: #e91e63; text-align: center;">₹</span>
+                </div>
+                <div>
+                    <strong>Valor Manual</strong>
+                    <p style="margin: 2px 0; font-size: 12px;">Ícono de valor</p>
+                </div>
+            </div>
+            <div class="debug-info">
+                Estos son ejemplos manuales de cómo deberían verse los iconos
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>3. Debugging Información</h3>
+            <div id="debug-info">
+                <p><strong>Estado del componente:</strong> <span id="component-status">Cargando...</span></p>
+                <p><strong>Estilos cargados:</strong> <span id="styles-count">-</span></p>
+                <p><strong>Shadow DOM:</strong> <span id="shadow-status">-</span></p>
+            </div>
+            <div class="debug-info">
+                Información de debug del componente
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>4. Controles de Test</h3>
+            <button onclick="reloadComponent()" style="padding: 8px 16px; background: #e91e63; color: white; border: none; border-radius: 5px; cursor: pointer; margin-right: 10px;">
+                🔄 Recargar Componente
+            </button>
+            <button onclick="inspectStyles()" style="padding: 8px 16px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                🔍 Inspeccionar Estilos
+            </button>
+            <div class="debug-info">
+                Usa estos controles para debuggear el componente
+            </div>
+        </div>
+    </div>
+
+    <!-- Cargar el componente -->
+    <script src="../landing-v1.0.0.js"></script>
+    
+    <script>
+        let componentElement = null;
+        
+        function updateDebugInfo() {
+            const componentStatus = document.getElementById('component-status');
+            const stylesCount = document.getElementById('styles-count');
+            const shadowStatus = document.getElementById('shadow-status');
+            
+            componentElement = document.querySelector('landing-web-component');
+            
+            if (componentElement) {
+                componentStatus.textContent = '✅ Cargado';
+                componentStatus.style.color = 'green';
+                
+                if (componentElement.shadowRoot) {
+                    shadowStatus.textContent = '✅ Shadow DOM activo';
+                    shadowStatus.style.color = 'green';
+                    
+                    const styles = componentElement.shadowRoot.querySelectorAll('style');
+                    stylesCount.textContent = `${styles.length} elementos <style>`;
+                    stylesCount.style.color = 'blue';
+                    
+                    // Log benefit-icon styles
+                    console.log('🎨 Benefit Icon Debug:', {
+                        totalStyles: styles.length,
+                        shadowRoot: componentElement.shadowRoot,
+                        benefitIcons: componentElement.shadowRoot.querySelectorAll('.benefit-icon'),
+                        benefitIconWrappers: componentElement.shadowRoot.querySelectorAll('.benefit-icon-wrapper')
+                    });
+                } else {
+                    shadowStatus.textContent = '❌ Sin Shadow DOM';
+                    shadowStatus.style.color = 'red';
+                }
+            } else {
+                componentStatus.textContent = '❌ No encontrado';
+                componentStatus.style.color = 'red';
+            }
+        }
+        
+        function reloadComponent() {
+            const container = document.querySelector('.test-section landing-web-component');
+            if (container && container.parentNode) {
+                container.parentNode.removeChild(container);
+            }
+            
+            const newComponent = document.createElement('landing-web-component');
+            document.querySelector('.test-section').appendChild(newComponent);
+            
+            setTimeout(updateDebugInfo, 1000);
+        }
+        
+        function inspectStyles() {
+            if (componentElement && componentElement.shadowRoot) {
+                const styles = componentElement.shadowRoot.querySelectorAll('style');
+                console.log('📋 Todos los estilos en Shadow DOM:');
+                styles.forEach((style, index) => {
+                    console.log(`Style ${index + 1}:`, style.textContent.substring(0, 200) + '...');
+                });
+                
+                const benefitIconStyles = [];
+                styles.forEach(style => {
+                    if (style.textContent.includes('.benefit-icon')) {
+                        benefitIconStyles.push(style.textContent);
+                    }
+                });
+                
+                console.log('🎯 Estilos que contienen .benefit-icon:', benefitIconStyles);
+            }
+        }
+        
+        // Auto-update debug info
+        setTimeout(updateDebugInfo, 2000);
+        setInterval(updateDebugInfo, 5000);
+    </script>
+</body>
+</html>

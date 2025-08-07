@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js Integration Test - Landing Component</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .status {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .status.loading {
+            background: #fff3cd;
+            border: 1px solid #ffecb3;
+            color: #856404;
+        }
+        .status.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .status.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .events-log {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .event-item {
+            margin-bottom: 5px;
+            font-size: 12px;
+            color: #666;
+        }
+        .component-container {
+            margin: 20px 0;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="vue-app">
+        <div class="container">
+            <h2>🧪 Vue.js Integration Test</h2>
+            <p>Testing Landing Web Component integration</p>
+            
+            <div class="status" :class="statusClass">
+                {{ statusMessage }}
+            </div>
+            
+            <div class="component-container">
+                <landing-web-component 
+                    v-if="componentLoaded"
+                    :session-id="sessionId"
+                    :user-id="userId"
+                    :config="configJson"
+                    ref="landingComponent">
+                </landing-web-component>
+                <div v-else>
+                    <p>Loading component...</p>
+                </div>
+            </div>
+            
+            <div class="events-log">
+                <h4>📋 Events Log:</h4>
+                <div v-for="event in events" :key="event.id" class="event-item">
+                    <strong>[{{ event.timestamp }}]</strong> {{ event.type }}: {{ event.message }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    statusMessage: 'Loading Landing Component...',
+                    statusClass: 'loading',
+                    componentLoaded: false,
+                    sessionId: 'vue-test-session-123',
+                    userId: 'vue-user-456',
+                    config: {
+                        title: 'Tarjeta Bradescard',
+                        primaryColor: '#e91e63',
+                        environment: 'vue-integration-test'
+                    },
+                    events: [],
+                    eventId: 0
+                };
+            },
+            computed: {
+                configJson() {
+                    return JSON.stringify(this.config);
+                }
+            },
+            mounted() {
+                this.loadLandingComponent();
+            },
+            methods: {
+                logEvent(type, message, data = null) {
+                    this.events.unshift({
+                        id: ++this.eventId,
+                        timestamp: new Date().toLocaleTimeString(),
+                        type,
+                        message,
+                        data
+                    });
+                    
+                    // Mantener solo los últimos 20 eventos
+                    if (this.events.length > 20) {
+                        this.events.pop();
+                    }
+                },
+                
+                async loadLandingComponent() {
+                    try {
+                        this.logEvent('INIT', 'Iniciando carga del componente...');
+                        
+                        // Cargar el script del Web Component
+                        const script = document.createElement('script');
+                        script.src = './dist/landing-v1.0.0.js'; // Ajusta la ruta según tu setup
+                        
+                        script.onload = () => {
+                            this.logEvent('LOADED', 'Script del componente cargado exitosamente');
+                            this.statusMessage = 'Component script loaded successfully';
+                            this.statusClass = 'success';
+                            
+                            // Esperar un poco antes de mostrar el componente
+                            setTimeout(() => {
+                                this.componentLoaded = true;
+                                this.setupEventListeners();
+                            }, 100);
+                        };
+                        
+                        script.onerror = (error) => {
+                            this.logEvent('ERROR', `Error cargando script: ${error.message || 'Unknown error'}`);
+                            this.statusMessage = 'Error loading component script';
+                            this.statusClass = 'error';
+                        };
+                        
+                        document.head.appendChild(script);
+                        
+                    } catch (error) {
+                        this.logEvent('ERROR', `Exception during load: ${error.message}`);
+                        this.statusMessage = `Error: ${error.message}`;
+                        this.statusClass = 'error';
+                    }
+                },
+                
+                setupEventListeners() {
+                    this.$nextTick(() => {
+                        const landingComponent = this.$refs.landingComponent;
+                        
+                        if (landingComponent) {
+                            this.logEvent('SETUP', 'Configurando event listeners...');
+                            
+                            // Component Ready
+                            landingComponent.addEventListener('component-ready', (event) => {
+                                this.logEvent('READY', `Componente listo: ${JSON.stringify(event.detail)}`);
+                                this.statusMessage = 'Component ready and functional!';
+                                this.statusClass = 'success';
+                            });
+                            
+                            // Output Data
+                            landingComponent.addEventListener('output-data', (event) => {
+                                this.logEvent('OUTPUT', `Datos de salida recibidos`, event.detail);
+                                this.handleFormCompleted(event.detail);
+                            });
+                            
+                            // Navigation Request
+                            landingComponent.addEventListener('request-navigation', (event) => {
+                                this.logEvent('NAVIGATION', `Solicitud de navegación: ${event.detail.direction}`, event.detail);
+                                this.handleNavigation(event.detail);
+                            });
+                            
+                            // Data Change
+                            landingComponent.addEventListener('data-changed', (event) => {
+                                this.logEvent('CHANGE', 'Cambio de datos detectado', event.detail);
+                            });
+                            
+                            // Error
+                            landingComponent.addEventListener('node-error', (event) => {
+                                this.logEvent('ERROR', `Error del componente: ${event.detail.error}`, event.detail);
+                            });
+                            
+                        } else {
+                            this.logEvent('ERROR', 'No se pudo obtener referencia al componente');
+                        }
+                    });
+                },
+                
+                handleFormCompleted(data) {
+                    this.logEvent('COMPLETED', 'Formulario completado - navegando...', data);
+                    
+                    // Simular navegación (en Vue.js real sería this.$router.push)
+                    setTimeout(() => {
+                        alert('🎉 Form completed! In a real Vue app, this would navigate to the next step.');
+                    }, 1000);
+                },
+                
+                handleNavigation(detail) {
+                    if (detail.direction === 'previous') {
+                        this.logEvent('NAV_BACK', 'Navegación hacia atrás solicitada');
+                        alert('🔄 Going back! In a real Vue app, this would navigate to the previous step.');
+                    }
+                }
+            }
+        }).mount('#vue-app');
+    </script>
+</body>
+</html>

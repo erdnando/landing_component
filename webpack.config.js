@@ -22,7 +22,7 @@ module.exports = (env, argv) => {
         umdNamedDefine: true,
         globalObject: 'this',
       }),
-      publicPath: isDevelopment ? '/' : 'auto',
+      publicPath: 'http://localhost:3001/',
       scriptType: 'text/javascript',
       clean: true, // Limpia dist folder antes de build
     },
@@ -44,24 +44,40 @@ module.exports = (env, argv) => {
               options: isDevelopment ? {
                 // Configuración simple para desarrollo React
                 injectType: 'styleTag',
+                attributes: { id: 'dev-landing-styles' },
               } : {
                 // Configuración compleja para producción (web component)
                 injectType: 'singletonStyleTag',
-                attributes: { id: 'landing-component-styles' },
+                attributes: { 
+                  id: 'landing-component-styles',
+                  'data-webpack': 'true',
+                  'data-component': 'landing'
+                },
                 // Asegurar que los estilos se inserten y preserven para Shadow DOM
                 insert: function(element) {
                   // Guardamos los estilos para que LandingWebComponent pueda acceder a ellos
                   if (typeof window !== 'undefined') {
-                    // @ts-ignore
+                    // Crear variables globales para los estilos
+                    window.__LANDING_STYLES__ = window.__LANDING_STYLES__ || [];
                     window._landingComponentStyles = window._landingComponentStyles || [];
-                    // @ts-ignore
-                    window._landingComponentStyles.push(element.textContent || element.innerText);
+                    window._landingCriticalStyles = window._landingCriticalStyles || '';
                     
-                    // También marcar específicamente estilos críticos
-                    if (element.textContent?.includes('benefits-grid-modern')) {
-                      // @ts-ignore
-                      window._landingCriticalStyles = element.textContent;
+                    const content = element.textContent || element.innerText || '';
+                    window.__LANDING_STYLES__.push(content);
+                    window._landingComponentStyles.push(content);
+                    
+                    // Marcar específicamente estilos críticos
+                    if (content.includes('benefits-grid-modern') || 
+                        content.includes('credit-card') || 
+                        content.includes('benefit-icon-wrapper')) {
+                      window._landingCriticalStyles += '\n' + content;
                     }
+                    
+                    console.log('📦 Webpack - Estilos guardados:', {
+                      totalStyles: window.__LANDING_STYLES__.length,
+                      criticalStylesLength: window._landingCriticalStyles.length,
+                      currentContentLength: content.length
+                    });
                   }
                   
                   // Inserción normal al head
@@ -107,6 +123,8 @@ module.exports = (env, argv) => {
         'process.env.NODE_ENV': JSON.stringify(isDevelopment ? 'development' : 'production'),
         'process.env.INCLUDE_STYLES': 'true',
         'process.env.COMPONENT_VERSION': JSON.stringify('1.0.0'),
+        // Exponer función para acceder a estilos compilados
+        '__WEBPACK_STYLES_AVAILABLE__': 'true',
       }),
       // BannerPlugin agrega un banner al inicio del archivo bundle (solo para producción)
       ...(!isDevelopment ? [
