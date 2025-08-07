@@ -14,7 +14,7 @@ const RequirementsView: React.FC<RequirementsViewProps> = ({
     <div className="requirements-view">
       {/* Header elegante con logos */}
       <div className="header-logos-modern">
-        <div className="bradescard-logo">bradescard</div>
+        <div className="bradescard-logo">Bradescard</div>
         <div className="promoda-logo">Promoda</div>
         <div className="card-mini-modern">
           <div className="card-chip-mini"></div>
