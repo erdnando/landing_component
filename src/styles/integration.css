@@ -1,0 +1,126 @@
+/* 
+ * Integration CSS for Landing Component
+ * This file contains styles to ensure proper rendering when integrated into other applications
+ */
+
+:root {
+  --landing-primary-color: #e91e63;
+  --landing-primary-dark: #c2185b;
+  --landing-primary-light: #f48fb1;
+  --landing-text-color: #333333;
+  --landing-text-light: #666666;
+}
+
+/* Reset styles for the component */
+landing-web-component {
+  all: initial;
+  display: block;
+  width: 100%;
+  min-height: 600px;
+  max-width: 375px;
+  margin: 0 auto;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+/* Ensure the shadow DOM correctly displays styles */
+landing-web-component::part(container) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+  max-width: 375px;
+  margin: 0 auto;
+  background-color: var(--landing-primary-color);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Presentation styles overrides for integration contexts */
+.presentation-view {
+  background: var(--landing-primary-color);
+  background: linear-gradient(
+    135deg,
+    var(--landing-primary-color),
+    var(--landing-primary-dark)
+  );
+  color: white;
+  text-align: center;
+  padding: 12px;
+  min-height: 100vh;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 375px;
+  margin: 0 auto;
+}
+
+/* Card specific styles */
+.card-visual-modern {
+  width: 80%;
+  max-width: 300px;
+  height: 180px;
+  margin: 20px auto;
+  background: linear-gradient(135deg, #333, #1a1a1a);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  transform: perspective(1000px) rotateX(10deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+/* Button styles */
+.btn-primary,
+.btn-secondary {
+  display: inline-block;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  min-width: 120px;
+  font-size: 14px;
+  margin: 10px auto;
+  width: 80%;
+  max-width: 250px;
+}
+
+.btn-primary {
+  background: white;
+  color: var(--landing-primary-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+}
+
+/* Requirements view styles */
+.requirements-view {
+  background: linear-gradient(to bottom, #ffffff, #f8f8f8);
+  color: var(--landing-text-color);
+  padding: 14px;
+  min-height: 100vh;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 375px;
+  margin: 0 auto;
+}

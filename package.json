@@ -1,0 +1,52 @@
+{
+  "name": "landing-component",
+  "version": "1.0.0",
+  "description": "Landing Page Component - Bradescard Promoda",
+  "main": "dist/landing-v1.0.0.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "src/",
+    "public/index.html"
+  ],
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack serve --mode development --open",
+    "lint": "eslint src --ext .ts,.tsx",
+    "clean": "rm -rf dist/",
+    "build:clean": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "react",
+    "typescript",
+    "web-component",
+    "landing-page",
+    "bradescard",
+    "promoda"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "css-loader": "^6.8.0",
+    "eslint": "^8.0.0",
+    "html-webpack-plugin": "^5.6.3",
+    "style-loader": "^3.3.0",
+    "ts-loader": "^9.4.0",
+    "typescript": "^5.0.0",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.0",
+    "webpack-dev-server": "^4.15.0"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  }
+}

@@ -1,0 +1,275 @@
+/* === VISTA DE REQUISITOS === */
+.requirements-view {
+  background: linear-gradient(to bottom, #ffffff, #f8f8f8);
+  color: #333;
+  padding: 14px;
+  height: 100%; /* Usar altura completa del contenedor */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribuir espacio uniformemente */
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Header moderno con logos */
+.header-logos-modern {
+  margin-bottom: 18px;
+  background: linear-gradient(135deg, #e91e63, #d81b60);
+  padding: 12px;
+  border-radius: 10px;
+  color: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 10px rgba(233, 30, 99, 0.2);
+}
+
+.requirements-view .bradescard-logo,
+.requirements-view .promoda-logo {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.card-mini-modern {
+  width: 35px;
+  height: 22px;
+  background: linear-gradient(135deg, #333, #1a1a1a);
+  border-radius: 4px;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.card-chip-mini {
+  width: 7px;
+  height: 5px;
+  background: linear-gradient(45deg, #ffd700, #ffaa00);
+  border-radius: 1px;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.card-shine-mini {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  transform: rotate(30deg);
+  pointer-events: none;
+}
+
+/* Título centrado */
+.requirements-title-modern {
+  text-align: center;
+  margin-bottom: 25px; /* Más espacio inferior */
+  padding-top: 10px; /* Más espacio superior */
+}
+
+.requirements-title-modern h2 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #e91e63;
+  margin-bottom: 5px;
+  letter-spacing: -0.5px;
+}
+
+.title-underline {
+  height: 3px;
+  width: 60px;
+  background: linear-gradient(to right, #e91e63, rgba(233, 30, 99, 0.3));
+  border-radius: 2px;
+  margin: 6px auto 0;
+}
+
+/* Lista de requisitos moderna */
+.requirements-list-modern {
+  margin-bottom: 30px; /* Más espacio inferior */
+  flex-grow: 1; /* Tomar el espacio disponible */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrar verticalmente */
+}
+
+.requirement-item-modern {
+  display: flex;
+  align-items: center;
+  padding: 18px 16px; /* Más padding vertical */
+  margin-bottom: 16px; /* Más espacio entre items */
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(233, 30, 99, 0.1);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.requirement-item-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.requirement-icon-wrapper {
+  margin-right: 15px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(233, 30, 99, 0.05);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  padding: 8px;
+}
+
+.requirement-text-modern {
+  flex: 1;
+}
+
+.requirement-text-modern strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.requirement-text-modern p {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.requirement-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #e91e63;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+/* Contenedor de botones moderno */
+.requirements-footer {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.requirements-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 8px 15px;
+  background: rgba(233, 30, 99, 0.06);
+  border-radius: 20px;
+  font-size: 12px;
+  color: #666;
+}
+
+.note-icon {
+  margin-right: 8px;
+  font-size: 14px;
+  color: #e91e63;
+}
+
+.buttons-container-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Más espacio entre botones */
+  margin-bottom: 0;
+  margin-top: 20px; /* Espacio superior */
+}
+
+.buttons-row {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* Botones en vista de requisitos */
+.requirements-view .btn {
+  width: 100%;
+  margin: 0;
+  padding: 12px 0;
+}
+
+/* Botones en fila */
+.buttons-row .btn {
+  width: 48%;
+  padding: 12px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+/* Botones específicos */
+.btn-continue {
+  background: linear-gradient(135deg, #e91e63, #d81b60);
+  color: white;
+  box-shadow: 0 4px 12px rgba(233, 30, 99, 0.25);
+}
+
+.btn-continue:hover {
+  background: linear-gradient(135deg, #d81b60, #c2185b);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(233, 30, 99, 0.3);
+}
+
+.btn-back {
+  background: transparent;
+  color: #e91e63;
+  border: 1px solid #e91e63;
+}
+
+.btn-back:hover {
+  background: rgba(233, 30, 99, 0.08);
+  border-color: #d81b60;
+  color: #d81b60;
+}
+
+.btn-text {
+  margin: 0 5px;
+}
+
+.btn-icon {
+  font-size: 16px;
+  transition: transform 0.2s;
+}
+
+.btn-continue:hover .btn-icon {
+  transform: translateX(3px);
+}
+
+.btn-back:hover .btn-icon {
+  transform: translateX(-3px);
+}
+
+/* Footer de versión moderno */
+.version-footer-modern {
+  text-align: center;
+  font-size: 11px;
+  color: #999;
+  margin-top: 12px;
+  opacity: 0.8;
+}
