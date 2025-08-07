@@ -15,7 +15,8 @@
 
 ### 📖 **Lectura Inicial** (Documentos esenciales)
 
-**1️⃣** [README Principal](./01_README.md) - Introducción y configuración básica
+**📄** [README Principal (Raíz del proyecto)](../README.md) - Landing page del proyecto en GitHub
+**1️⃣** [README de Desarrollo](./01_README.md) - Introducción técnica detallada
 **2️⃣** [Arquitectura de Microfrontends](./02_MICROFRONTEND_ARCHITECTURE_REFERENCE.md) - Fundamentos técnicos
 **3️⃣** [Guía de Plantillas](./03_MICROFRONTEND_TEMPLATES_GUIDE.md) - Ejemplos prácticos
 **4️⃣** [Referencia Rápida](./04_MICROFRONTEND_QUICK_REFERENCE.md) - Cheatsheet de desarrollo
@@ -44,17 +45,17 @@
 
 ### 👨‍💻 **Para Desarrolladores Nuevos**
 ```
-01 → 02 → 04 → 05 → 06
+README (raíz) → 01 → 02 → 04 → 05 → 06
 ```
 
 ### 🏗️ **Para Implementar Nuevos Componentes**
 ```
-02 → 03 → 04 → 06 → 09
+README (raíz) → 02 → 03 → 04 → 06 → 09
 ```
 
 ### 🔌 **Para Integración en Aplicaciones**
 ```
-01 → 07 → 08 → 05
+README (raíz) → 07 → 08 → 05
 ```
 
 ### 🔧 **Para Mantenimiento**
@@ -68,7 +69,8 @@
 
 | Documento | Líneas | Tipo | Estado |
 |-----------|--------|------|--------|
-| 01_README | ~200 | Principal | ✅ Vigente |
+| README (raíz) | ~200 | Landing GitHub | ✅ Vigente |
+| 01_README | ~200 | Desarrollo | ✅ Vigente |
 | 02_ARCHITECTURE | ~772 | Técnico | ✅ Vigente |
 | 03_TEMPLATES | ~1006 | Práctico | ✅ Vigente |
 | 04_QUICK_REF | ~473 | Referencia | ✅ Vigente |
@@ -87,11 +89,11 @@
 
 ## 💡 **Recomendaciones de Uso**
 
-1. **Inicio Rápido**: Lee documentos 01, 02, 04
-2. **Desarrollo Completo**: Sigue toda la secuencia 01-12
+1. **Inicio Rápido**: Lee README (raíz), documentos 01, 02, 04
+2. **Desarrollo Completo**: Sigue toda la secuencia README → 01-12
 3. **Referencia Diaria**: Usa documento 04 (Quick Reference)
 4. **Resolución de Problemas**: Consulta documento 06
-5. **Integración**: Enfócate en documentos 07 y 08
+5. **Integración**: Enfócate en README (raíz) y documentos 07 y 08
 
 ---
 
