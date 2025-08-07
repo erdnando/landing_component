@@ -8,7 +8,7 @@
 // ESTILOS BASE Y RESET
 // ==========================================
 export const RESET_STYLES = `
-/* Reset completo para Shadow DOM */
+/* Reset completo para Shadow DOM y modo desarrollo */
 *, *::before, *::after {
   margin: 0 !important;
   padding: 0 !important;
@@ -20,13 +20,41 @@ export const RESET_STYLES = `
   background-color: transparent !important;
 }
 
+/* Reset específico para el body en modo desarrollo */
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #f5f5f5 !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+/* Reset para el elemento root en modo desarrollo */
+#root {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 100vh !important;
+  background-color: #f5f5f5 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+}
+
 /* Contenedor principal del componente */
-.landing-component-container {
+.landing-component-container,
+.basicos-component-container,
+.legales-component-container,
+.sms-component-container,
+.ine-component-container,
+.selfie-component-container,
+.capturarapida-component-container,
+.capturacompleta-component-container,
+.altaproducto-component-container {
   all: initial !important;
   display: block !important;
   width: 100% !important;
   max-width: 375px !important;
-  min-height: 600px !important;
+  height: 100vh !important;
+  min-height: min(600px, 100vh) !important;
   margin: 0 auto !important;
   font-family: Arial, Helvetica, sans-serif !important;
   color: white !important;
@@ -49,11 +77,13 @@ h1, h2, h3, h4, h5, h6, p, span, div, button, input, a, ul, ol, li {
 .app {
   width: 100% !important;
   max-width: 375px !important;
-  min-height: 600px !important;
+  height: 100vh !important;
+  min-height: min(600px, 100vh) !important;
   background: #e91e63 !important;
   margin: 0 auto !important;
   position: relative !important;
   overflow-x: hidden !important;
+  overflow-y: auto !important;
   display: flex !important;
   flex-direction: column !important;
   box-sizing: border-box !important;
@@ -77,18 +107,46 @@ export const PRESENTATION_STYLES = `
   background: linear-gradient(135deg, #e91e63, #c2185b) !important;
   color: white !important;
   text-align: center !important;
-  padding: 12px !important;
-  min-height: 600px !important;
+  padding: 12px 12px 8px !important; /* Reducimos padding inferior */
+  height: 100% !important;
+  min-height: min(600px, 100vh) !important;
   display: flex !important;
   flex-direction: column !important;
-  justify-content: flex-start !important;
+  justify-content: flex-start !important; /* Cambiamos a flex-start para mejor control del espacio */
   position: relative !important;
-  overflow: hidden !important;
+  overflow: auto !important; /* Permitimos scroll en caso de necesidad */
   width: 100% !important;
   max-width: 375px !important;
   margin: 0 auto !important;
   font-family: Arial, Helvetica, sans-serif !important;
   box-sizing: border-box !important;
+}
+
+/* Media query para compactar elementos en pantallas pequeñas */
+@media (max-height: 650px) {
+  .presentation-view {
+    padding: 8px !important;
+  }
+  
+  .main-title-modern {
+    margin-bottom: 8px !important;
+  }
+  
+  .main-title-modern h1 {
+    font-size: 20px !important;
+    margin-bottom: 4px !important;
+  }
+  
+  .main-title-modern p {
+    font-size: 14px !important;
+    margin-top: 2px !important;
+  }
+  
+  .credit-card {
+    margin: 10px auto !important;
+    width: 150px !important;
+    height: 90px !important;
+  }
 }
 
 /* Efecto de degradado sutil en el fondo */
@@ -110,8 +168,8 @@ export const PRESENTATION_STYLES = `
 
 /* Tarjeta de crédito - DEFINICIÓN ÚNICA */
 .credit-card {
-  width: 180px !important;
-  height: 110px !important;
+  width: 170px !important;
+  height: 100px !important; /* Reducimos altura */
   background: linear-gradient(135deg, #2c2c2c, #1a1a1a) !important;
   border-radius: 12px !important;
   padding: 12px !important;
@@ -119,7 +177,7 @@ export const PRESENTATION_STYLES = `
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.1) !important;
   overflow: hidden !important;
   border: 1px solid rgba(255, 255, 255, 0.05) !important;
-  margin: 18px auto !important;
+  margin: 12px auto !important; /* Reducimos margen */
   display: block !important;
 }
 
@@ -159,32 +217,119 @@ export const PRESENTATION_STYLES = `
   pointer-events: none !important;
 }
 
-/* Grid de beneficios - DEFINICIÓN ÚNICA */
+/* Benefits grid - DEFINICIÓN ÚNICA */
 .benefits-grid-modern {
   display: grid !important;
   grid-template-columns: 1fr 1fr !important;
-  grid-gap: 12px !important;
-  margin: 0 auto 18px !important;
-  width: 92% !important;
+  grid-template-rows: auto auto !important; /* Forzar 2 filas para mostrar los 4 elementos */
+  grid-gap: 8px !important; /* Aumentamos el gap */
+  margin: 0 auto 10px !important; /* Aumentamos el margen inferior */
+  width: 90% !important; /* Aumentamos el ancho para mejor distribución */
   position: relative !important;
   z-index: 1 !important;
   flex-grow: 1 !important;
-  align-content: center !important;
+  align-content: flex-start !important;
+  overflow: visible !important;
+  padding: 0 !important;
+  grid-auto-rows: minmax(54px, auto) !important; /* Aumentamos la altura mínima */
+  max-height: none !important;
+  justify-content: center !important; /* Centrar en horizontal */
+}
+
+/* Media queries para adaptación responsiva */
+@media (max-height: 650px) {
+  .benefits-grid-modern {
+    grid-template-columns: 1fr 1fr !important; /* Mantener 2 columnas */
+    grid-template-rows: auto auto !important; /* Forzar 2 filas */
+    grid-gap: 4px !important; /* Reducir aún más el espacio entre tarjetas */
+    grid-gap: 8px !important; /* Reducimos el espacio entre elementos */
+    max-height: none !important;
+    margin-bottom: 8px !important;
+    grid-auto-rows: minmax(55px, auto) !important; /* Altura mínima reducida */
+    width: 98% !important; /* Aprovechamos más espacio horizontal */
+  }
+  
+  .benefit-card-modern {
+    min-height: 62px !important; /* Aumentamos la altura mínima */
+    height: auto !important;
+    padding: 6px 8px !important;
+  }
+}
+
+/* Adaptación para pantallas muy pequeñas */
+@media (max-height: 550px) {
+  .benefits-grid-modern {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important; /* Mantener 2 columnas */
+    grid-template-rows: auto auto !important; /* Forzar 2 filas */
+    grid-gap: 6px !important; /* Espacio mínimo entre elementos */
+    grid-auto-rows: minmax(45px, auto) !important; /* Altura mínima muy reducida */
+    max-height: none !important;
+    width: 100% !important; /* Ancho completo para aprovechar todo el espacio */
+    padding: 0 4px !important; /* Padding horizontal mínimo */
+    margin-bottom: 6px !important;
+    margin-top: 6px !important;
+  }
+  
+  .benefit-card-modern {
+    min-height: 52px !important; /* Aumentamos la altura mínima */
+    height: auto !important;
+    padding: 5px 6px !important; /* Padding mínimo */
+    margin-bottom: 0 !important;
+  }
+  
+  .benefit-desc strong {
+    font-size: 11px !important;
+    line-height: 1 !important;
+  }
+  
+  .benefit-desc p {
+    font-size: 9px !important;
+    margin-top: 1px !important;
+    line-height: 1 !important;
+  }
+  
+  /* Reducir espacio para título y otros elementos */
+  .main-title-modern {
+    margin-bottom: 6px !important;
+  }
+  
+  .main-title-modern h1 {
+    font-size: 18px !important;
+    margin-bottom: 2px !important;
+  }
+  
+  .credit-card {
+    height: 85px !important;
+    width: 140px !important;
+    margin: 8px auto !important;
+  }
+}
+
+/* Si la pantalla es ancha pero baja, mantener 2 columnas */
+@media (min-width: 400px) and (max-height: 600px) {
+  .benefits-grid-modern {
+    grid-template-columns: 1fr 1fr !important;
+  }
 }
 
 .benefit-card-modern {
   display: flex !important;
-  align-items: center !important;
-  background: rgba(255, 255, 255, 0.15) !important;
-  border-radius: 12px !important;
-  padding: 12px !important;
+  align-items: flex-start !important; /* Alineamos al inicio para mejor distribución de texto */
+  background: rgba(255, 255, 255, 0.2) !important; /* Aumentamos ligeramente la opacidad */
+  border-radius: 10px !important;
+  padding: 10px !important; /* Aumentamos el padding */
   text-align: left !important;
   height: 100% !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12) !important; /* Mejoramos la sombra */
   backdrop-filter: blur(5px) !important;
   transition: transform 0.2s, background 0.2s !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  min-height: 70px !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  min-height: 80px !important;
+  max-height: 85px !important; /* Aumentamos ligeramente la altura máxima */
+  margin-bottom: 0 !important;
+  width: 100% !important; /* Ancho completo dentro del grid */
+  max-width: 155px !important; /* Aumentamos ligeramente el ancho máximo */
 }
 
 .benefit-card-modern:hover {
@@ -192,18 +337,54 @@ export const PRESENTATION_STYLES = `
   background: rgba(255, 255, 255, 0.2) !important;
 }
 
+/* Estilos responsivos para tarjetas de beneficios en pantallas pequeñas */
+@media (max-height: 650px) {
+  .benefit-card-modern {
+    min-height: auto !important;
+    padding: 10px !important;
+    margin-bottom: 8px !important;
+
+  }
+  
+  .benefit-icon-wrapper {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    margin-right: 8px !important;
+  }
+  
+  .benefit-desc {
+    flex: 1 !important;
+    padding-right: 4px !important;
+  }
+  
+  .benefit-desc strong {
+    font-size: 14px !important;
+    white-space: normal !important;
+    line-height: 1.2 !important;
+    margin-bottom: 1px !important;
+  }
+  
+  .benefit-desc p {
+    font-size: 11px !important;
+    white-space: normal !important;
+    line-height: 1.2 !important;
+    overflow: visible !important;
+  }
+}
+
 /* DEFINICIÓN ÚNICA Y OPTIMIZADA - benefit-icon-wrapper */
 .benefit-icon-wrapper {
-  width: 36px !important;
-  height: 36px !important;
-  min-width: 36px !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   background: white !important;
   border-radius: 50% !important;
-  margin-right: 10px !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+  margin-right: 8px !important; /* Aumentamos el margen */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
   transition: all 0.3s ease !important;
   flex-shrink: 0 !important;
 }
@@ -236,7 +417,7 @@ export const PRESENTATION_STYLES = `
 
 /* DEFINICIÓN ÚNICA Y OPTIMIZADA - benefit-percent */
 .benefit-percent {
-  font-size: 28px !important;
+  font-size: 20px !important;
   font-weight: 700 !important;
   color: #e91e63 !important;
   display: inline-block !important;
@@ -253,6 +434,83 @@ export const PRESENTATION_STYLES = `
   z-index: 10 !important;
   opacity: 1 !important;
   visibility: visible !important;
+}
+
+/* Media query para ajustar tamaños de porcentajes y textos */
+@media (max-height: 650px) {
+  .benefit-percent {
+    font-size: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .benefit-value {
+    font-size: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .benefit-icon-wrapper {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    margin-right: 8px !important;
+    padding: 0 !important;
+  }
+  
+  .benefit-desc {
+    padding-right: 0 !important; /* Eliminar padding extra */
+  }
+}
+
+/* Ajustes adicionales para pantallas muy pequeñas */
+@media (max-height: 550px) {
+  .benefit-percent {
+    font-size: 20px !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+  }
+  
+  .benefit-value {
+    font-size: 18px !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+  }
+  
+  /* Mejorar distribución del espacio en las tarjetas */
+  .benefit-icon-wrapper {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    margin-right: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+  }
+  
+  .benefit-icon {
+    font-size: 15px !important;
+  }
+  
+  .benefit-desc strong {
+    font-size: 11px !important;
+    line-height: 1.1 !important;
+    margin: 0 !important;
+  }
+  
+  .benefit-desc p {
+    font-size: 9px !important;
+    line-height: 1 !important;
+    margin-top: 1px !important;
+    max-height: 18px !important;
+  }
 }
 
 /* DEFINICIÓN ÚNICA Y OPTIMIZADA - benefit-icon */
@@ -291,23 +549,40 @@ export const PRESENTATION_STYLES = `
 
 .benefit-desc {
   flex: 1 !important;
+  width: calc(100% - 44px) !important; /* Restamos el nuevo ancho del icono + margen */
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  padding-top: 3px !important; /* Añadimos padding superior */
 }
 
 .benefit-desc strong {
-  font-size: 13px !important;
+  font-size: 13px !important; /* Aumentamos tamaño de fuente */
   font-weight: bold !important;
   display: block !important;
-  line-height: 1.3 !important;
-  letter-spacing: -0.3px !important;
+  line-height: 1.2 !important; /* Aumentamos interlineado */
+  letter-spacing: -0.2px !important;
   color: white !important;
+  white-space: normal !important; /* Permitimos que ocupe más de una línea */
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 100% !important;
+  margin-bottom: 2px !important; /* Añadimos margen inferior */
 }
 
 .benefit-desc p {
-  font-size: 11px !important;
-  line-height: 1.2 !important;
+  font-size: 11px !important; /* Aumentamos tamaño de fuente */
+  line-height: 1.15 !important; /* Aumentamos interlineado */
   margin-top: 2px !important;
-  opacity: 0.9 !important;
-  color: rgba(255, 255, 255, 0.9) !important;
+  opacity: 0.95 !important; /* Aumentamos opacidad */
+  color: rgba(255, 255, 255, 0.95) !important;
+  white-space: normal !important; /* Permitimos que ocupe más de una línea */
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 14px !important; /* Altura máxima reducida */
 }
 
 /* ESTILOS ADICIONALES PARA TEXTOS Y LABELS FALTANTES */
@@ -385,6 +660,8 @@ export const PRESENTATION_STYLES = `
   padding: 0 !important;
   display: block !important;
   font-family: Arial, Helvetica, sans-serif !important;
+
+  
 }
 
 .presentation-view h1 {
@@ -640,13 +917,13 @@ export const REQUIREMENTS_STYLES = `
   background: linear-gradient(to bottom, #ffffff, #f8f8f8) !important;
   color: #333333 !important;
   padding: 14px !important;
-  height: 100% !important;
-  min-height: 600px !important;
+  height: 100vh !important;
+  min-height: min(600px, 100vh) !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
   position: relative !important;
-  overflow: hidden !important;
+  overflow: auto !important;
   width: 100% !important;
   max-width: 375px !important;
   margin: 0 auto !important;
@@ -740,11 +1017,14 @@ export const REQUIREMENTS_STYLES = `
 
 /* Lista de requisitos moderna */
 .requirements-list-modern {
-  margin-bottom: 30px !important;
+  margin-bottom: 20px !important;
   flex-grow: 1 !important;
   display: flex !important;
   flex-direction: column !important;
-  justify-content: center !important;
+  justify-content: flex-start !important;
+  overflow-y: auto !important;
+  min-height: 0 !important; /* Permite que se comprima */
+  padding-bottom: 10px !important;
 }
 
 .requirement-item-modern {
@@ -835,12 +1115,18 @@ export const REQUIREMENTS_STYLES = `
   color: #e91e63 !important;
 }
 
+/* Buttons container */
 .buttons-container-modern {
   display: flex !important;
   flex-direction: column !important;
   gap: 12px !important;
   margin-bottom: 0 !important;
-  margin-top: 20px !important;
+  margin-top: auto !important;
+  padding-top: 12px !important;
+  position: sticky !important;
+  bottom: 0 !important;
+  background: inherit !important;
+  z-index: 10 !important;
 }
 
 .buttons-row {
@@ -872,6 +1158,10 @@ export const REQUIREMENTS_STYLES = `
   background: linear-gradient(135deg, #e91e63, #d81b60) !important;
   color: white !important;
   box-shadow: 0 4px 12px rgba(233, 30, 99, 0.25) !important;
+  min-height: 44px !important; /* Altura mínima para facilitar tap en móvil */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .btn-continue:hover {
@@ -884,6 +1174,10 @@ export const REQUIREMENTS_STYLES = `
   background: transparent !important;
   color: #e91e63 !important;
   border: 1px solid #e91e63 !important;
+  min-height: 44px !important; /* Altura mínima para facilitar tap en móvil */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .btn-back:hover {

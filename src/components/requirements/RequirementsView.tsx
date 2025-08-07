@@ -30,7 +30,7 @@ const RequirementsView: React.FC<RequirementsViewProps> = ({
       </div>
 
       {/* Lista de requisitos con diseño moderno */}
-      <div className="requirements-list-modern">
+      <div className="requirements-list-modern" style={{ flex: 1 }}>
         <div className="requirement-item-modern">
           <div className="requirement-icon-wrapper">
             <svg width="40" height="24" viewBox="0 0 60 40" fill="none">
