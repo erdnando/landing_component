@@ -22,7 +22,7 @@ function injectStylesForDevelopment() {
   console.log('🎨 Estilos de desarrollo inyectados correctamente');
 }
 
-// SPA CLÁSICO: Siempre montar la app React en #root
+// MODO DUAL: SPA clásico o Microfrontend (Web Component)
 if (typeof window !== 'undefined') {
   const container = document.getElementById('root');
   if (container) {
@@ -31,7 +31,12 @@ if (typeof window !== 'undefined') {
     root.render(React.createElement(App));
     console.log('🛠️ React App: SPA montada correctamente en #root');
   } else {
-    console.error('No se encontró el elemento #root en el HTML. La app no puede montarse.');
+    // Modo microfrontend: registrar el Web Component
+    import('./LandingWebComponent').then(() => {
+      console.log('🌐 Modo Microfrontend: Web Component registrado para integración externa');
+    }).catch((error) => {
+      console.error('❌ Error cargando el Web Component:', error);
+    });
   }
 } else {
   console.warn('Window object not available - Server Side Rendering?');
