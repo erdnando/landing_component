@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 // ESTILOS CONSOLIDADOS: Ya no se importan CSS individuales
 // Todos los estilos están consolidados en microfrontend-styles.ts
 
@@ -9,8 +9,23 @@ interface RequirementsViewProps {
 
 const RequirementsView: React.FC<RequirementsViewProps> = ({ 
   onBack, 
-  onContinue 
+
 }) => {
+  // Emitir evento personalizado al dar click en '¡Todo Listo!'
+  const handleContinue = useCallback(() => {
+    const outputVariables = { foo: 'bar', otra: 123 };
+    // Buscar el nodo raíz del web component
+    let root = document.getElementById('root') || document.body;
+    // Buscar el custom element más cercano (ejemplo: landing-web-component o requirements-web-component)
+    let host = root.closest('landing-web-component, requirements-web-component') || root.parentElement;
+    if (!host) host = root;
+    host.dispatchEvent(new CustomEvent('next-step', {
+      detail: outputVariables,
+      bubbles: true,
+      composed: true
+    }));
+  }, []);
+
   return (
     <div className="requirements-view">
       {/* Header elegante con logos */}
@@ -84,7 +99,7 @@ const RequirementsView: React.FC<RequirementsViewProps> = ({
             <span className="btn-icon">←</span>
             <span className="btn-text">Volver</span>
           </button>
-          <button className="btn btn-primary btn-continue" onClick={onContinue}>
+          <button className="btn btn-primary btn-continue" onClick={handleContinue}>
             <span className="btn-text">¡Todo Listo!</span>
             <span className="btn-icon">→</span>
           </button>
