@@ -13,12 +13,13 @@ const RequirementsView: React.FC<RequirementsViewProps> = ({
 }) => {
   // Emitir evento personalizado al dar click en '¡Todo Listo!'
   const handleContinue = useCallback(() => {
-    const outputVariables = { foo: 'bar', otra: 123 };
+    const outputVariables = { bubbles: true, composed: true,foo: 'bar', otra: 123 };
     // Buscar el nodo raíz del web component
-    let root = document.getElementById('root') || document.body;
+    let root = document.querySelector('landing-web-component') || document.body;
     // Buscar el custom element más cercano (ejemplo: landing-web-component o requirements-web-component)
     let host = root.closest('landing-web-component, requirements-web-component') || root.parentElement;
     if (!host) host = root;
+    console.log('[RequirementsView] Disparando evento next-step', outputVariables);
     host.dispatchEvent(new CustomEvent('next-step', {
       detail: outputVariables,
       bubbles: true,
