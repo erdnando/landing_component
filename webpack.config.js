@@ -10,18 +10,9 @@ module.exports = (env, argv) => {
     entry: './src/index.ts',
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: isDevelopment ? 'bundle.js' : 'landing-v1.0.0.js',
+      filename: 'bundle.js',
       chunkFilename: '[name].[contenthash].js',
-      // Solo usar library config para producción (web component)
-      ...(isDevelopment ? {} : {
-        library: {
-          name: 'LandingComponent',
-          type: 'umd',
-          export: 'default',
-        },
-        umdNamedDefine: true,
-        globalObject: 'this',
-      }),
+      // Si necesitas exponer como librería, puedes agregar la config aquí
       publicPath: 'http://localhost:3001/',
       scriptType: 'text/javascript',
       clean: true, // Limpia dist folder antes de build

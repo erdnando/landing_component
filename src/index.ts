@@ -22,36 +22,16 @@ function injectStylesForDevelopment() {
   console.log('🎨 Estilos de desarrollo inyectados correctamente');
 }
 
-// MODO DUAL: React Development + Web Component Production
+// SPA CLÁSICO: Siempre montar la app React en #root
 if (typeof window !== 'undefined') {
-  // MODO DESARROLLO: Aplicación React normal
   const container = document.getElementById('root');
   if (container) {
-    // IMPORTANTE: Inyectar estilos antes de renderizar
     injectStylesForDevelopment();
-    
     const root = createRoot(container);
     root.render(React.createElement(App));
-    console.log('🛠️ React App: Aplicación cargada correctamente con estilos');
+    console.log('🛠️ React App: SPA montada correctamente en #root');
   } else {
-    // MODO PRODUCCIÓN: Cargar Web Component para integración
-    console.log('🌐 Modo Web Component: Cargando para integración externa');
-    
-    // Verificar disponibilidad de React
-    if (!(window as any).React) {
-      console.warn('React not found globally. Consider providing React as external dependency.');
-    }
-    
-    if (!(window as any).ReactDOM) {
-      console.warn('ReactDOM not found globally. Consider providing ReactDOM as external dependency.');
-    }
-    
-    // Importar y registrar el Web Component
-    import('./LandingWebComponent').then(() => {
-      console.log('📦 Landing Web Component v1.0.0 loaded successfully');
-    }).catch((error) => {
-      console.error('❌ Error loading Landing Web Component:', error);
-    });
+    console.error('No se encontró el elemento #root en el HTML. La app no puede montarse.');
   }
 } else {
   console.warn('Window object not available - Server Side Rendering?');
