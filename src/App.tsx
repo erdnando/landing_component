@@ -8,16 +8,19 @@ import LoadingView from './components/loading/LoadingView';
 
 const AppContent: React.FC = () => {
   const { currentView, setCurrentView } = useAppContext();
+  // For debugging responsiveness we force loading view
   const [isLoading, setIsLoading] = useState(true);
+  const [showMain, setShowMain] = useState(false);
 
   // Simulamos el proceso de carga inicial
   useEffect(() => {
     const initializeApp = async () => {
       try {
-        // Simular procesos de inicialización
-        await new Promise(resolve => setTimeout(resolve, 5000)); // 5 segundos de carga para ver la animación
+        // Simular procesos de inicialización - reducido a 3 segundos
+        await new Promise(resolve => setTimeout(resolve, 3000));
         
-        setIsLoading(false);
+        // No iniciar transición aquí, dejar que el LoadingView lo maneje
+        
       } catch (error) {
         console.error('Error durante la inicialización:', error);
         setIsLoading(false);
@@ -26,6 +29,15 @@ const AppContent: React.FC = () => {
 
     initializeApp();
   }, []);
+
+  const handleLoadingComplete = () => {
+    // Iniciar handoff: mostrar main debajo y mantener loading para cross-fade
+    setShowMain(true);
+    // Quitar loading después del fade-out
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 900);
+  };
 
   const goToRequirements = () => {
     setCurrentView('requirements');
@@ -39,12 +51,13 @@ const AppContent: React.FC = () => {
     alert('¡Proceso completado! Aquí continuaría el flujo...');
   };
   
-  // Estilo inline para forzar que el componente se vea correctamente
+  // Estilo inline responsivo para el contenedor de la aplicación
   const appStyle: React.CSSProperties = {
     width: '100%',
-    maxWidth: '375px',
-    height: isLoading ? '850px' : '667px', // Altura ajustada para LoadingView
-    background: isLoading ? 'transparent' : '#e91e63',
+    maxWidth: isLoading ? '100vw' : 'min(100vw, 1024px)',
+    height: 'auto',
+    minHeight: '100vh', // Siempre usar 100vh para evitar saltos
+  background: 'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f0f23 100%)',
     margin: '0 auto',
     position: 'relative',
     overflowX: 'hidden',
@@ -54,26 +67,27 @@ const AppContent: React.FC = () => {
     boxSizing: 'border-box',
     fontFamily: 'Arial, sans-serif',
     color: 'white',
+    transition: 'background 0.8s ease-out', // Transición más rápida y directa
   };
-
-  // Si está cargando, mostrar el LoadingView
-  if (isLoading) {
-    return (
-      <div className="app" style={appStyle}>
-        <LoadingView 
-          loadingMessage="Iniciando experiencia Promoda..."
-          onLoadingComplete={() => setIsLoading(false)}
-        />
-      </div>
-    );
-  }
 
   return (
     <div className="app" style={appStyle}>
-      {currentView === 'presentation' ? (
-        <PresentationView onNext={goToRequirements} />
-      ) : (
-        <RequirementsView onBack={backToPresentation} onContinue={handleContinue} />
+      {(showMain || !isLoading) && (
+        currentView === 'presentation' ? (
+          <PresentationView onNext={goToRequirements} />
+        ) : (
+          <RequirementsView onBack={backToPresentation} onContinue={handleContinue} />
+        )
+      )}
+
+      {isLoading && (
+        <div className="loading-layer">
+          <LoadingView 
+            loadingMessage="Iniciando experiencia Promoda..."
+            onLoadingComplete={handleLoadingComplete}
+            isCompleting={false}
+          />
+        </div>
       )}
     </div>
   );

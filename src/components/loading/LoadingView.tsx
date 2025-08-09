@@ -3,27 +3,43 @@ import React, { useEffect, useState } from 'react';
 interface LoadingViewProps {
   loadingMessage?: string;
   onLoadingComplete?: () => void;
+  isCompleting?: boolean;
+  /** Modo debug: congela el loading para revisar estilos */
+  debugFreeze?: boolean;
 }
 
 const LoadingView: React.FC<LoadingViewProps> = ({ 
   loadingMessage = "Iniciando sistema...",
-  onLoadingComplete
+  onLoadingComplete,
+  isCompleting = false,
+  debugFreeze = false
 }) => {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [showStars, setShowStars] = useState(false);
-  const [isCompleting, setIsCompleting] = useState(false);
+  const [isInternalCompleting, setIsInternalCompleting] = useState(false);
+
+  // Usar el prop isCompleting o el estado interno
+  const completing = isCompleting || isInternalCompleting;
 
   useEffect(() => {
+    if (debugFreeze) {
+      // Modo congelado para pruebas visuales
+      setLoadingProgress(44);
+      setShowStars(true);
+      setIsInternalCompleting(false);
+      return; // No iniciar intervalos ni completar
+    }
+
     // Animación de progreso
     const progressInterval = setInterval(() => {
       setLoadingProgress(prev => {
         if (prev >= 100) {
           clearInterval(progressInterval);
           // Iniciar la transición de fade-out
-          setIsCompleting(true);
-          // Llamar al callback después de la transición
+          setIsInternalCompleting(true);
+          // Disparar onLoadingComplete al INICIO del fade para que la vista debajo ya renderice
           if (onLoadingComplete) {
-            setTimeout(onLoadingComplete, 1000); // 1 segundo para la transición
+            setTimeout(onLoadingComplete, 50);
           }
           return 100;
         }
@@ -40,11 +56,11 @@ const LoadingView: React.FC<LoadingViewProps> = ({
       clearInterval(progressInterval);
       clearTimeout(starTimeout);
     };
-  }, [onLoadingComplete]);
+  }, [onLoadingComplete, debugFreeze]);
 
   // Effect para controlar el scroll durante la transición
   useEffect(() => {
-    if (isCompleting) {
+    if (completing) {
       // Guardar el estado actual del overflow
       const originalOverflow = document.body.style.overflow || '';
       const originalOverflowX = document.body.style.overflowX || '';
@@ -77,17 +93,19 @@ const LoadingView: React.FC<LoadingViewProps> = ({
         htmlElement.style.overflow = originalHtmlOverflow;
       };
     }
-  }, [isCompleting]);
+  }, [completing]);
 
   return (
     <div 
-      className={`loading-view-fullscreen ${isCompleting ? 'loading-completing' : ''}`}
+      className={`landing-component-container ${completing ? 'loading-completing' : ''} ${debugFreeze ? 'loading-debug' : ''}`}
       data-component="landing"
       data-view="loading"
       data-microfrontend="true"
       style={{
-        opacity: isCompleting ? 0 : 1,
-        transition: 'opacity 1s ease-out, filter 1s ease-out'
+        opacity: completing ? 0 : 1,
+  transition: 'opacity 1s ease-out, filter 1s ease-out',
+        background: 'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f0f23 100%)',
+        overflow: 'hidden'
       }}
     >
       {/* Overlay para bloquear interacciones */}
@@ -185,7 +203,7 @@ const LoadingView: React.FC<LoadingViewProps> = ({
         data-content="loading-center"
       >
         <div className="loading-title-epic">
-          <h1>Iniciando Sistema</h1>
+          <h1>Cargando...</h1>
           <div className="title-underline-glow"></div>
         </div>
 
@@ -230,7 +248,7 @@ const LoadingView: React.FC<LoadingViewProps> = ({
           </div>
           <div className="status-item status-item-loading">
             <span className="status-icon-loading">⚡</span>
-            <span>Validando credenciales...</span>
+            <span>Cargando...</span>
           </div>
         </div>
       </div>

@@ -183,7 +183,6 @@ class LandingWebComponent extends HTMLElement {
         margin: 0 !important;
         padding: 0 !important;
         box-sizing: border-box !important;
-        background: none !important;
         border: none !important;
         outline: none !important;
         color: inherit !important;
@@ -248,7 +247,7 @@ class LandingWebComponent extends HTMLElement {
       font-family: Arial, Helvetica, sans-serif !important;
       box-sizing: border-box !important;
       overflow: auto !important;
-      background-color: var(--primary-color, #e91e63) !important;
+  background-color: transparent !important;
       color: white !important;
       
     `;
