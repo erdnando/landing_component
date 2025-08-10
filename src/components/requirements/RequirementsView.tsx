@@ -1,15 +1,29 @@
 import React from 'react';
 
-export const RequirementsView = ({ onContinue }: { onContinue: () => void }) => {
+interface RequirementsViewProps {
+  onContinue: () => void;
+  bannerImage?: string; // URL opcional para la imagen del banner
+}
+
+export const RequirementsView = ({ onContinue, bannerImage }: RequirementsViewProps) => {
+  // Generar estilos dinámicos para el banner si se proporciona una imagen
+  const headerBannerStyle = bannerImage ? {
+    backgroundImage: `url(${bannerImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center'
+  } : undefined;
+
   return (
     <div className="requirements-view">
-      <div className="header-logos-modern">
-        <div className="bradescard-logo">bradescard</div>
-        <div className="card-mini-modern">
-          <div className="card-chip-mini" />
-          <div className="card-shine-mini" />
+      <div className="header-banner" style={headerBannerStyle}>
+        <div className="header-logos-modern">
+          <div className="bradescard-logo">bradescard</div>
+          <div className="card-mini-modern">
+            <div className="card-chip-mini" />
+            <div className="card-shine-mini" />
+          </div>
+          <div className="promoda-logo">Promoda</div>
         </div>
-        <div className="promoda-logo">Promoda</div>
       </div>
       
       <h1 className="requirements-title">
@@ -54,11 +68,10 @@ export const RequirementsView = ({ onContinue }: { onContinue: () => void }) => 
         </div>
       </div>
       
-      <button className="requirements-btn" onClick={onContinue}>
-        ¡Todo Listo!
-      </button>
-      
       <footer className="requirements-footer">
+        <button className="requirements-btn" onClick={onContinue}>
+          ¡Todo Listo!
+        </button>
         <div className="requirements-version">Versión: 1.0.0</div>
       </footer>
     </div>

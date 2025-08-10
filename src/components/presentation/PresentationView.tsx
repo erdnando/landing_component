@@ -90,11 +90,13 @@ const PresentationView: React.FC<PresentationViewProps> = ({ onNext }) => {
         <p className="simple-instruction">Solo necesitas tu INE</p>
       </div>
 
-      {/* Botón Iniciar con efecto */}
-      <button className="btn btn-primary btn-start-modern" onClick={onNext}>
-        <span className="btn-text">Iniciar</span>
-        <span className="btn-icon">→</span>
-      </button>
+      {/* Botón Iniciar con efecto - Contenedor para alinear con RequirementsView */}
+      <div className="button-container-modern">
+        <button className="btn btn-primary btn-start-modern" onClick={onNext}>
+          <span className="btn-text">Iniciar</span>
+          <span className="btn-icon">→</span>
+        </button>
+      </div>
 
       {/* Footer legal estilizado */}
       <div className="legal-footer-modern">

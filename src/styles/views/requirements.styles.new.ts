@@ -19,7 +19,32 @@ export const REQUIREMENTS_STYLES = `
   box-sizing: border-box !important;
 }
 
-/* Header con logos */
+/* Header con banner y logos */
+.header-banner {
+  width: 100% !important;
+  background: #e91e63 !important; /* Color de fondo por defecto, se cubrirá con la imagen */
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 600 160"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:%23e91e63;stop-opacity:1" /><stop offset="100%" style="stop-color:%23ff6090;stop-opacity:1" /></linearGradient></defs><rect width="600" height="160" fill="url(%23grad)"/></svg>') !important; /* Gradiente por defecto */
+}
+
+/* Para usar una imagen externa, habilitamos esta opción: */
+.header-banner::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-image: url('./images/header-banner.png') !important; /* Ruta relativa a la carpeta public */
+  background-size: cover !important;
+  background-position: center !important;
+  z-index: 1 !important;
+  opacity: 0 !important; /* Se cambia a 1 cuando la imagen está disponible */
+}
 .header-logos-modern {
   display: flex !important;
   justify-content: space-between !important;
@@ -27,6 +52,7 @@ export const REQUIREMENTS_STYLES = `
   padding: clamp(16px, 4vw, 24px) clamp(20px, 5vw, 32px) !important;
   position: relative !important;
   z-index: 2 !important;
+  height: clamp(80px, 20vw, 120px) !important; /* Altura del banner */
 }
 
 .bradescard-logo, .promoda-logo {
@@ -153,15 +179,19 @@ export const REQUIREMENTS_STYLES = `
   color: #e91e63 !important;
   font-size: clamp(1rem, 2.8vw, 1.15rem) !important;
   font-weight: 700 !important;
-  border: none !important;
+  border: 1px solid #e91e63 !important; /* Borde del color principal */
   border-radius: clamp(25px, 6.5vw, 30px) !important;
   padding: clamp(14px, 3.5vw, 18px) clamp(30px, 7.5vw, 36px) !important;
-  margin: 0 clamp(20px, 5vw, 32px) clamp(20px, 5vw, 24px) !important;
   cursor: pointer !important;
-  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s !important;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s, border-color 0.3s !important;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08) !important;
   position: relative !important;
   overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  min-width: clamp(180px, 45vw, 300px) !important;
 }
 
 /* Efecto de onda al hacer click */
@@ -185,7 +215,8 @@ export const REQUIREMENTS_STYLES = `
 
 .requirements-btn:hover {
   transform: translateY(-3px) !important;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12) !important;
+  border-color: #ff4081 !important; /* Borde más claro al hacer hover */
 }
 
 .requirements-btn:active {
@@ -193,12 +224,34 @@ export const REQUIREMENTS_STYLES = `
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Footer con versión */
+/* Animación del botón */
+@keyframes pulseButton {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.requirements-footer .requirements-btn {
+  animation: pulseButton 2.5s infinite ease-in-out !important;
+}
+
+/* Footer con versión y botón */
 .requirements-footer {
   margin-top: auto !important;
   width: 100% !important;
   padding-top: clamp(20px, 5vw, 30px) !important;
   padding-bottom: clamp(16px, 4vw, 20px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: clamp(16px, 4vw, 24px) !important;
 }
 
 .requirements-version {
@@ -236,6 +289,12 @@ export const REQUIREMENTS_STYLES = `
   .requirements-btn {
     padding: 12px 25px !important;
     font-size: 0.95rem !important;
+    min-width: 160px !important;
+  }
+  
+  .requirements-footer {
+    padding-top: 16px !important;
+    gap: 12px !important;
   }
 }
 
@@ -253,10 +312,13 @@ export const REQUIREMENTS_STYLES = `
     margin-right: auto !important;
   }
   
+  .requirements-footer {
+    padding-top: clamp(24px, 6vw, 36px) !important;
+    padding-bottom: clamp(20px, 5vw, 30px) !important;
+  }
+  
   .requirements-btn {
     max-width: 300px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
   }
 }
 `;
