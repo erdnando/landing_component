@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 // Todos los estilos están consolidados en microfrontend-styles.ts
 import { AppProvider, useAppContext } from './core/context/AppContext';
 import PresentationView from './components/presentation/PresentationView';
-import RequirementsView from './components/requirements/RequirementsView';
+import { RequirementsView } from './components/requirements/RequirementsView';
 import LoadingView from './components/loading/LoadingView';
 
 const AppContent: React.FC = () => {
@@ -76,7 +76,7 @@ const AppContent: React.FC = () => {
         currentView === 'presentation' ? (
           <PresentationView onNext={goToRequirements} />
         ) : (
-          <RequirementsView onBack={backToPresentation} onContinue={handleContinue} />
+          <RequirementsView onContinue={handleContinue} />
         )
       )}
 
