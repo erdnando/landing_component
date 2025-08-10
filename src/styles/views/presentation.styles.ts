@@ -108,23 +108,129 @@ export const PRESENTATION_STYLES = `
 
 /* Tarjeta de crédito - RESPONSIVA */
 /* Tarjeta de crédito - RESPONSIVA */
+
+/* Tarjeta de crédito mejorada */
 .credit-card {
   position: relative !important;
   z-index: 2 !important;
-  width: clamp(162px, 40.5vw, 252px) !important; /* ~10% smaller */
-  height: clamp(99px, 25.2vw, 153px) !important;  /* ~10% smaller */
+  width: clamp(162px, 40.5vw, 252px) !important;
+  height: clamp(99px, 25.2vw, 153px) !important;
   margin: var(--spacing-lg) auto !important;
   background:
-    radial-gradient(120% 60% at 0% 0%, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.1) 35%, rgba(255,255,255,0) 60%) ,
-    linear-gradient(135deg, #f7f7fa, #e5e6ee 40%, #d8d9e4) !important;
-  border-radius: var(--border-radius) !important;
-  box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.3),
-    0 4px 12px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    linear-gradient(135deg, #f7f7fa 60%, #e5e6ee 90%, #d8d9e4 100%),
+    repeating-linear-gradient(120deg, rgba(255,255,255,0.08) 0 2px, transparent 2px 8px),
+    radial-gradient(120% 60% at 0% 0%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 35%, rgba(255,255,255,0) 60%) !important;
+  border-radius: 8px !important;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.22),
+    0 4px 12px rgba(0, 0, 0, 0.13),
+    0 0 0 1.5px rgba(233,30,99,0.08),
+    inset 0 1.5px 8px rgba(255,255,255,0.18) !important;
   overflow: hidden !important;
-  transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) !important;
-  transition: transform 0.3s ease !important;
+  transform: perspective(1000px) rotateX(4deg) rotateY(-4deg) !important;
+  transition: transform 0.3s cubic-bezier(.4,1.6,.6,1) !important;
+}
+
+.credit-card:hover {
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1.03) !important;
+  box-shadow:
+    0 12px 32px rgba(0,0,0,0.28),
+    0 6px 18px rgba(0,0,0,0.18),
+    0 0 0 2px rgba(233,30,99,0.13),
+    inset 0 2px 12px rgba(255,255,255,0.22) !important;
+}
+
+/* Brillo diagonal */
+.credit-card::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(120deg, transparent 60%, rgba(255,255,255,0.22) 70%, transparent 80%) !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+
+/* Franja decorativa superior */
+.credit-card::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 28% !important;
+  background: linear-gradient(90deg, rgba(233,30,99,0.13), rgba(233,30,99,0.04)) !important;
+  z-index: 1 !important;
+}
+
+/* Chip dorado */
+.credit-card-chip {
+  position: absolute !important;
+  top: 68px !important;
+  right: 8px !important;
+  width: 32px !important;
+  height: 22px !important;
+  background: linear-gradient(45deg, #d4af37 60%, #ffd700 100%) !important;
+  border-radius: 5px !important;
+  box-shadow: 0 1.5px 4px rgba(0,0,0,0.13), inset 0 1px 2px #fff8 !important;
+  border: 1.5px solid #bfa13a !important;
+  z-index: 3 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.credit-card-chip::after {
+  content: "" !important;
+  display: block !important;
+  width: 70%;
+  height: 60%;
+  background: repeating-linear-gradient(90deg, rgba(0,0,0,0.10) 0 2px, transparent 2px 4px) !important;
+  border-radius: 2px !important;
+}
+
+/* Mejor alineación de textos */
+.credit-card-number {
+  font-size: clamp(10px, 2.0vw, 15px) !important;
+  color: #2d3a4a !important;
+  font-weight: 600 !important;
+  letter-spacing: 2.2px !important;
+  font-family: 'OCR A Std', 'Courier New', monospace !important;
+  margin-top: 18px !important;
+  margin-bottom: 8px !important;
+  text-align: right !important;
+  opacity: 0.92 !important;
+  text-shadow: 0.5px 0.5px 0 #fff, -0.5px -0.5px 0 rgba(0,0,0,0.10) !important;
+  z-index: 3 !important;
+  position: relative !important;
+}
+.credit-card-name {
+  font-size: clamp(10px, 1.7vw, 14px) !important;
+  color: #1a237e !important;
+  font-weight: 500 !important;
+  letter-spacing: 1.2px !important;
+  font-family: 'Montserrat', Arial, sans-serif !important;
+  margin-bottom: 2px !important;
+  text-align: left !important;
+  opacity: 0.93 !important;
+  z-index: 3 !important;
+  position: relative !important;
+  left:10px !important;
+  top: 38px !important;
+}
+.credit-card-expiry {
+  font-size: clamp(10px, 1.3vw, 12px) !important;
+  color: #2d3a4a !important;
+  font-weight: 500 !important;
+  font-family: 'OCR A Std', 'Courier New', monospace !important;
+  letter-spacing: 1.2px !important;
+  text-align: left !important;
+  opacity: 0.85 !important;
+  z-index: 3 !important;
+  position: relative !important;
+  left:10px !important;
+  top: 40px !important;
 }
 
 /* Elementos internos de la tarjeta de crédito */
