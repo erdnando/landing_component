@@ -133,10 +133,7 @@ const LoadingView: React.FC<LoadingViewProps> = ({
       </div>
 
       {/* Header con logos */}
-      <div className="header-logos-floating">
-        <div className="bradescard-logo-glow">Bradescard</div>
-        <div className="promoda-logo-glow">Promoda</div>
-      </div>
+      
 
       {/* Cohete principal animado */}
       <div 
