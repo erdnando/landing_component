@@ -5,6 +5,7 @@ interface PresentationViewProps {
 }
 
 const PresentationView: React.FC<PresentationViewProps> = ({ onNext }) => {
+  
   return (
     <div className="presentation-view">
       {/* Header con logos */}
@@ -15,7 +16,7 @@ const PresentationView: React.FC<PresentationViewProps> = ({ onNext }) => {
 
       {/* Título principal con diseño mejorado */}
       <div className="main-title-modern">
-        <h1>Tarjeta de crédito <span className="branded-text">Promoda</span> <span className="branded-text-secondary">bradescard</span></h1>
+        <h1>Tarjeta de crédito <span className="branded-text">Promoda</span> <span className="branded-text-secondary">Bradescard</span></h1>
         <p>¡Solicítala hoy <strong>sin costo</strong>!</p>
       </div>
 
@@ -68,13 +69,16 @@ const PresentationView: React.FC<PresentationViewProps> = ({ onNext }) => {
         <span className="promo-icon">★</span>
       </div>
 
-      {/* Tarjeta imagen con efecto 3D */}
+      {/* Tarjeta imagen estática */}
       <div className="card-image-container">
-        <div className="card-image">
-          <div className="credit-card">
+        <div className="card-image-static">
+          <div className="credit-card-static">
             <div className="card-brand">Promoda</div>
             <div className="card-chip"></div>
             <div className="card-shine"></div>
+            <div className="card-number">
+              <span>**** **** **** 2458</span>
+            </div>
           </div>
         </div>
       </div>

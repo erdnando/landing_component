@@ -93,28 +93,246 @@ export const PRESENTATION_STYLES = `
   font-weight: 300 !important;
 }
 
-/* Tarjeta de crédito con estilo claro */
-.credit-card {
+/* Contenedor para la tarjeta (sin perspectiva 3D) */
+.card-image-container {
+  display: flex !important;
+  justify-content: center !important;
+  margin: var(--spacing-lg) 0 !important;
+  position: relative !important;
+  width: 100% !important;
+  z-index: 2 !important;
+}
+
+/* Tarjeta estática sin animación */
+.card-image-static {
+  position: relative !important;
+  display: flex !important;
+  justify-content: center !important;
+  animation: cardEntrance 0.6s ease-out forwards !important; /* Animación de entrada inicial */
+  -webkit-animation: cardEntrance 0.6s ease-out forwards !important;
+  -moz-animation: cardEntrance 0.6s ease-out forwards !important;
+  width: 100% !important;
+}
+
+/* Animación de entrada para la tarjeta */
+@keyframes cardEntrance {
+  0% { opacity: 0; transform: translateY(20px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@-webkit-keyframes cardEntrance {
+  0% { opacity: 0; -webkit-transform: translateY(20px) scale(0.95); }
+  100% { opacity: 1; -webkit-transform: translateY(0) scale(1); }
+}
+@-moz-keyframes cardEntrance {
+  0% { opacity: 0; -moz-transform: translateY(20px) scale(0.95); }
+  100% { opacity: 1; -moz-transform: translateY(0) scale(1); }
+}
+
+/* Tarjeta de crédito estática con estilo rosa como en la imagen */
+.credit-card-static {
   position: relative !important;
   z-index: 2 !important;
   width: clamp(162px, 40.5vw, 252px) !important;
   height: clamp(99px, 25.2vw, 153px) !important;
-  margin: var(--spacing-lg) auto !important;
-  background: linear-gradient(135deg, #ffffff, #f1f5f9) !important;
+  margin: var(--spacing-md) auto !important;
+  background: linear-gradient(135deg, #e91e63, #d81b60) !important;
   border-radius: var(--border-radius) !important;
   box-shadow: 
-    0 8px 24px rgba(0, 0, 0, 0.1),
-    0 4px 12px rgba(0, 0, 0, 0.06) !important;
+    0 8px 24px rgba(233, 30, 99, 0.25),
+    0 4px 12px rgba(233, 30, 99, 0.15) !important;
   overflow: hidden !important;
-  border: 1px solid #e2e8f0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
   transition: transform 0.3s ease !important;
+  -webkit-transition: -webkit-transform 0.3s ease !important;
+  -moz-transition: -moz-transform 0.3s ease !important;
+  display: flex !important;
+  flex-direction: column !important;
+  color: white !important;
+  background-color: #e91e63 !important; /* Fondo de respaldo */
 }
 
-.credit-card:hover {
+.credit-card-static:hover {
   transform: translateY(-2px) !important;
   box-shadow: 
     0 12px 32px rgba(0, 0, 0, 0.12),
     0 6px 16px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Chip de la tarjeta - actualizamos para mejor visualización */
+.credit-card-static .card-chip {
+  width: 30px !important;
+  height: 22px !important;
+  background: linear-gradient(45deg, #f5d76e, #f9d423) !important;
+  border-radius: 3px !important;
+  position: absolute !important;
+  top: 25% !important;
+  left: 10% !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid rgba(255, 215, 0, 0.8) !important;
+  z-index: 2 !important;
+  opacity: 1 !important;
+}
+
+/* Brillo de la tarjeta */
+.credit-card-static .card-shine {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 100% !important;
+  background: radial-gradient(
+    circle at 50% 10%,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0) 70%
+  ) !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+
+/* Marca de la tarjeta - no visible en la imagen de referencia */
+.credit-card-static .card-brand {
+  display: none !important;
+}
+
+/* Número de la tarjeta */
+.credit-card-static .card-number {
+  position: absolute !important;
+  bottom: clamp(15px, 3.5vw, 25px) !important;
+  left: 0 !important;
+  right: 0 !important;
+  text-align: center !important;
+  z-index: 2 !important;
+}
+
+.credit-card-static .card-number span {
+  font-size: clamp(10px, 2.8vw, 14px) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.5px !important;
+  font-family: 'OCR A Std', 'Courier New', monospace !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
+}
+
+/* Evitar que el hover afecte durante la animación */
+.card-flip-animation .credit-card:hover {
+  transform: none !important;
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+}
+
+/* Estilos específicos para navegadores problemáticos */
+.safari-browser .card-flip-animation {
+  transform: rotateY(0deg) !important;
+  -webkit-transform: rotateY(0deg) !important;
+  animation: safariFlip 1.5s ease-in-out forwards !important;
+  -webkit-animation: safariFlip 1.5s ease-in-out forwards !important;
+}
+
+@keyframes safariFlip {
+  0% { transform: rotateY(0deg) scale(1); opacity: 1; }
+  10% { transform: rotateY(36deg) scale(1.05); }
+  20% { transform: rotateY(72deg) scale(1.1); opacity: 0.8; }
+  30% { transform: rotateY(108deg) scale(1.05); opacity: 0.6; }
+  40% { transform: rotateY(144deg) scale(1); opacity: 0.4; }
+  50% { transform: rotateY(180deg) scale(0.95); opacity: 0.5; }
+  60% { transform: rotateY(216deg) scale(1); opacity: 0.6; }
+  70% { transform: rotateY(252deg) scale(1.05); opacity: 0.8; }
+  80% { transform: rotateY(288deg) scale(1.1); opacity: 0.9; }
+  90% { transform: rotateY(324deg) scale(1.05); }
+  100% { transform: rotateY(360deg) scale(1); opacity: 1; }
+}
+
+@-webkit-keyframes safariFlip {
+  0% { -webkit-transform: rotateY(0deg) scale(1); opacity: 1; }
+  10% { -webkit-transform: rotateY(36deg) scale(1.05); }
+  20% { -webkit-transform: rotateY(72deg) scale(1.1); opacity: 0.8; }
+  30% { -webkit-transform: rotateY(108deg) scale(1.05); opacity: 0.6; }
+  40% { -webkit-transform: rotateY(144deg) scale(1); opacity: 0.4; }
+  50% { -webkit-transform: rotateY(180deg) scale(0.95); opacity: 0.5; }
+  60% { -webkit-transform: rotateY(216deg) scale(1); opacity: 0.6; }
+  70% { -webkit-transform: rotateY(252deg) scale(1.05); opacity: 0.8; }
+  80% { -webkit-transform: rotateY(288deg) scale(1.1); opacity: 0.9; }
+  90% { -webkit-transform: rotateY(324deg) scale(1.05); }
+  100% { -webkit-transform: rotateY(360deg) scale(1); opacity: 1; }
+}
+
+/* Fallback para navegadores sin soporte 3D completo */
+.ie-browser .card-flip-animation, 
+.edge-browser .card-flip-animation,
+.no-3d-support .card-flip-animation {
+  animation: fadeInOut 1.5s ease-in-out forwards !important;
+  -webkit-animation: fadeInOut 1.5s ease-in-out forwards !important;
+  -moz-animation: fadeInOut 1.5s ease-in-out forwards !important;
+  transform-style: flat !important;
+  -webkit-transform-style: flat !important;
+}
+
+@keyframes fadeInOut {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; }
+  25% { transform: scale(0.9) rotate(90deg); opacity: 0.7; }
+  50% { transform: scale(0.8) rotate(180deg); opacity: 0.5; }
+  75% { transform: scale(0.9) rotate(270deg); opacity: 0.7; }
+  100% { transform: scale(1) rotate(360deg); opacity: 1; }
+}
+
+@-webkit-keyframes fadeInOut {
+  0% { -webkit-transform: scale(1) rotate(0deg); opacity: 1; }
+  25% { -webkit-transform: scale(0.9) rotate(90deg); opacity: 0.7; }
+  50% { -webkit-transform: scale(0.8) rotate(180deg); opacity: 0.5; }
+  75% { -webkit-transform: scale(0.9) rotate(270deg); opacity: 0.7; }
+  100% { -webkit-transform: scale(1) rotate(360deg); opacity: 1; }
+}
+
+@-moz-keyframes fadeInOut {
+  0% { -moz-transform: scale(1) rotate(0deg); opacity: 1; }
+  25% { -moz-transform: scale(0.9) rotate(90deg); opacity: 0.7; }
+  50% { -moz-transform: scale(0.8) rotate(180deg); opacity: 0.5; }
+  75% { -moz-transform: scale(0.9) rotate(270deg); opacity: 0.7; }
+  100% { -moz-transform: scale(1) rotate(360deg); opacity: 1; }
+}
+
+/* Fallback adicional para Opera */
+.opera-browser .card-flip-animation {
+  animation: fadeInOut 1.5s ease-in-out forwards !important;
+  -o-animation: fadeInOut 1.5s ease-in-out forwards !important;
+}
+
+/* Animación de giro tipo moneda */
+@keyframes cardFlip {
+  0% { transform: rotateY(0deg); }
+  25% { transform: rotateY(90deg) scale(1.1); }
+  50% { transform: rotateY(180deg) scale(1); }
+  75% { transform: rotateY(270deg) scale(1.1); }
+  100% { transform: rotateY(calc(360deg * var(--num-rotations))); }
+}
+@-webkit-keyframes cardFlip {
+  0% { -webkit-transform: rotateY(0deg); }
+  25% { -webkit-transform: rotateY(90deg) scale(1.1); }
+  50% { -webkit-transform: rotateY(180deg) scale(1); }
+  75% { -webkit-transform: rotateY(270deg) scale(1.1); }
+  100% { -webkit-transform: rotateY(calc(360deg * var(--num-rotations))); }
+}
+@-moz-keyframes cardFlip {
+  0% { -moz-transform: rotateY(0deg); }
+  25% { -moz-transform: rotateY(90deg) scale(1.1); }
+  50% { -moz-transform: rotateY(180deg) scale(1); }
+  75% { -moz-transform: rotateY(270deg) scale(1.1); }
+  100% { -moz-transform: rotateY(calc(360deg * var(--num-rotations))); }
+}
+
+/* Clase que aplica la animación de giro */
+.card-flip-animation {
+  animation: cardFlip 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+  -webkit-animation: cardFlip 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+  -moz-animation: cardFlip 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+  transform-origin: center center !important;
+  -webkit-transform-origin: center center !important;
+  -moz-transform-origin: center center !important;
+  backface-visibility: visible !important;
+  -webkit-backface-visibility: visible !important;
+  -moz-backface-visibility: visible !important;
+  will-change: transform !important; /* Mejora el rendimiento de la animación */
 }
 
 /* Contenido de la tarjeta - RESPONSIVO */
