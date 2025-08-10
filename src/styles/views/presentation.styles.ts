@@ -93,25 +93,26 @@ export const PRESENTATION_STYLES = `
   font-weight: 300 !important;
 }
 
-/* Contenedor para la tarjeta (sin perspectiva 3D) */
-.card-image-container {
+/* Contenedor para la tarjeta */
+.presentation-view .card-image-container {
   display: flex !important;
   justify-content: center !important;
-  margin: var(--spacing-lg) 0 !important;
+  align-items: center !important;
+  margin: 30px 0 !important;
   position: relative !important;
   width: 100% !important;
   z-index: 2 !important;
+  min-height: 170px !important; /* Asegurar espacio mínimo */
 }
 
-/* Tarjeta estática sin animación */
-.card-image-static {
+/* Tarjeta estática */
+.presentation-view .card-image-static {
   position: relative !important;
   display: flex !important;
   justify-content: center !important;
-  animation: cardEntrance 0.6s ease-out forwards !important; /* Animación de entrada inicial */
-  -webkit-animation: cardEntrance 0.6s ease-out forwards !important;
-  -moz-animation: cardEntrance 0.6s ease-out forwards !important;
+  align-items: center !important;
   width: 100% !important;
+  opacity: 1 !important;
 }
 
 /* Animación de entrada para la tarjeta */
@@ -128,27 +129,26 @@ export const PRESENTATION_STYLES = `
   100% { opacity: 1; -moz-transform: translateY(0) scale(1); }
 }
 
-/* Tarjeta de crédito estática con estilo rosa como en la imagen */
-.credit-card-static {
+/* Tarjeta de crédito estática con estilo rosa */
+.presentation-view .card-image-container .credit-card-static {
   position: relative !important;
   z-index: 2 !important;
-  width: clamp(162px, 40.5vw, 252px) !important;
-  height: clamp(99px, 25.2vw, 153px) !important;
-  margin: var(--spacing-md) auto !important;
+  width: 250px !important; /* Ancho fijo para evitar problemas */
+  height: 150px !important; /* Alto fijo para evitar problemas */
+  margin: 25px auto !important;
+  background-color: #e91e63 !important; /* Color sólido como fallback */
   background: linear-gradient(135deg, #e91e63, #d81b60) !important;
-  border-radius: var(--border-radius) !important;
+  border-radius: 10px !important;
   box-shadow: 
-    0 8px 24px rgba(233, 30, 99, 0.25),
-    0 4px 12px rgba(233, 30, 99, 0.15) !important;
-  overflow: hidden !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  transition: transform 0.3s ease !important;
-  -webkit-transition: -webkit-transform 0.3s ease !important;
-  -moz-transition: -moz-transform 0.3s ease !important;
+    0 8px 24px rgba(233, 30, 99, 0.4),
+    0 4px 12px rgba(233, 30, 99, 0.2) !important;
+  overflow: visible !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
   display: flex !important;
   flex-direction: column !important;
   color: white !important;
-  background-color: #e91e63 !important; /* Fondo de respaldo */
+  opacity: 1 !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
 }
 
 .credit-card-static:hover {
@@ -158,19 +158,60 @@ export const PRESENTATION_STYLES = `
     0 6px 16px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Chip de la tarjeta - actualizamos para mejor visualización */
-.credit-card-static .card-chip {
+/* Chip de la tarjeta */
+.presentation-view .credit-card-static .card-chip {
   width: 30px !important;
-  height: 22px !important;
-  background: linear-gradient(45deg, #f5d76e, #f9d423) !important;
-  border-radius: 3px !important;
+  height: 24px !important;
+  background: transparent !important;
   position: absolute !important;
-  top: 25% !important;
-  left: 10% !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
-  border: 1px solid rgba(255, 215, 0, 0.8) !important;
+  top: 30px !important;
+  left: 30px !important;
+  z-index: 3 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Brillo de la tarjeta */
+.presentation-view .credit-card-static .card-shine {
+  position: absolute !important;
+  top: 100px !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0) 60%
+  ) !important;
   z-index: 2 !important;
-  opacity: 1 !important;
+  pointer-events: none !important;
+}
+
+/* Marca de la tarjeta - ocultamos según petición */
+.presentation-view .credit-card-static .card-brand {
+  display: none !important; /* Ocultamos la marca dentro de la tarjeta */
+}
+
+/* Número de la tarjeta */
+.presentation-view .credit-card-static .card-number {
+  position: absolute !important;
+  bottom: 20px !important;
+  left: 0 !important;
+  right: 0 !important;
+  text-align: center !important;
+  z-index: 3 !important;
+}
+
+.presentation-view .credit-card-static .card-number span {
+  font-size: 14px !important;
+  color: white !important;
+  font-weight: 600 !important;
+  letter-spacing: 1.5px !important;
+  font-family: 'monospace', 'Courier New', monospace !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
 }
 
 /* Brillo de la tarjeta */
@@ -361,14 +402,16 @@ export const PRESENTATION_STYLES = `
 }
 
 .card-chip {
-  width: clamp(20px, 5vw, 32px) !important;
-  height: clamp(16px, 4vw, 24px) !important;
-  background: linear-gradient(45deg, #d4af37, #ffd700) !important;
-  border-radius: 3px !important;
-  position: relative !important;
-  box-shadow: 
-    inset 0 1px 2px rgba(0, 0, 0, 0.2),
-    0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  width: 30px !important;
+  height: 24px !important;
+  background: transparent !important;
+  position: absolute !important;
+  top: 25px !important;
+  left: 20px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  z-index: 3 !important;
 }
 
 .card-brand {
