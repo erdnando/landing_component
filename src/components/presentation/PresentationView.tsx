@@ -70,15 +70,21 @@ const PresentationView: React.FC<PresentationViewProps> = ({ onNext }) => {
       </div>
 
       {/* Tarjeta de crédito simplificada */}
-      <div className="card-image-container">
+      {/* <div className="card-image-container">
         <div className="credit-card-static">
-          {/* <div className="card-shine"></div> */}
+           <div className="card-shine"></div> 
          
-          {/* Eliminamos la línea de card-brand para que la tarjeta se muestre correctamente */}
+
            <div className="card-number">
             <span>**** **** **** 2458</span>
           </div> 
         </div>
+      </div> */}
+      <div className="credit-card">
+        <div className="credit-card-chip"></div>
+        <div className="credit-card-number">**** **** **** 2458</div>
+        <div className="credit-card-name">NOMBRE APELLIDO</div>
+        <div className="credit-card-expiry">12/28</div>
       </div>
 
       {/* Instrucción simple con icono */}

@@ -107,6 +107,7 @@ export const PRESENTATION_STYLES = `
 }
 
 /* Tarjeta de crédito - RESPONSIVA */
+/* Tarjeta de crédito - RESPONSIVA */
 .credit-card {
   position: relative !important;
   z-index: 2 !important;
@@ -124,6 +125,41 @@ export const PRESENTATION_STYLES = `
   overflow: hidden !important;
   transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) !important;
   transition: transform 0.3s ease !important;
+}
+
+/* Elementos internos de la tarjeta de crédito */
+.credit-card-number {
+  font-size: clamp(10px, 1.7vw, 13px) !important;
+  color: #2d3a4a !important;
+  font-weight: 600 !important;
+  letter-spacing: 2.2px !important;
+  font-family: 'OCR A Std', 'Courier New', monospace !important;
+  margin-top: 18px !important;
+  margin-bottom: 8px !important;
+  text-align: right !important;
+  opacity: 0.92 !important;
+  text-shadow: 0.5px 0.5px 0 #fff, -0.5px -0.5px 0 rgba(0,0,0,0.10) !important;
+}
+
+.credit-card-name {
+  font-size: clamp(10px, 1.7vw, 13px) !important;
+  color: #1a237e !important;
+  font-weight: 500 !important;
+  letter-spacing: 1.2px !important;
+  font-family: 'Montserrat', Arial, sans-serif !important;
+  margin-bottom: 2px !important;
+  text-align: left !important;
+  opacity: 0.93 !important;
+}
+
+.credit-card-expiry {
+  font-size: clamp(10px, 1.7vw, 13px) !important;
+  color: #2d3a4a !important;
+  font-weight: 500 !important;
+  font-family: 'OCR A Std', 'Courier New', monospace !important;
+  letter-spacing: 1.2px !important;
+  text-align: left !important;
+  opacity: 0.85 !important;
 }
 
 .credit-card:hover {
@@ -202,6 +238,7 @@ export const PRESENTATION_STYLES = `
   text-transform: uppercase !important;
   letter-spacing: 0.6px !important;
   z-index: 2 !important;
+  
 }
 
 .presentation-view .card-image-container { display: flex !important; justify-content: center !important; }
