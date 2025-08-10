@@ -1,14 +1,9 @@
-/**
- * ESTILOS DE VISTA DE PRESENTACIÓN
- * Vista principal con tarjeta de crédito y beneficios
- * Usando colores claros como en la segunda imagen
- */
-
 export const PRESENTATION_STYLES = `
-/* Vista de presentación - BASE RESPONSIVA con colores claros */
+/* Vista de presentación - BASE RESPONSIVA */
 .presentation-view {
-  background: #f8fafc !important;
-  color: #334155 !important;
+  background: #e91e63 !important;
+  background: linear-gradient(135deg, #e91e63, #c2185b) !important;
+  color: white !important;
   text-align: center !important;
   padding: var(--content-padding) !important;
   height: 100% !important;
@@ -39,11 +34,11 @@ export const PRESENTATION_STYLES = `
   padding-right: max(12px, env(safe-area-inset-right)) !important;
   gap: 8px !important;
   font-size: clamp(12px, 3.2vw, 16px) !important;
-  color: #e91e63 !important;
+  color: rgba(255,255,255,0.9) !important;
   z-index: 3 !important;
   line-height: 1.1 !important;
   text-align: initial !important;
-  pointer-events: none !important;
+  pointer-events: none !important; /* evita bloquear clics del contenido */
 }
 
 /* Posiciona y recorta los textos de marca en el header */
@@ -54,12 +49,29 @@ export const PRESENTATION_STYLES = `
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
-  max-width: 46% !important;
+  max-width: 46% !important; /* evita empalmes en pantallas muy angostas */
 }
 
 .header-logos-modern .promoda-logo {
-  margin-left: auto !important;
+  margin-left: auto !important; /* asegura alineación a la derecha */
   text-align: right !important;
+}
+
+/* Efecto de degradado sutil en el fondo */
+.presentation-view::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: radial-gradient(
+    circle at top right,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 50%
+  ) !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
 }
 
 /* Fade-in de vistas para evitar flash blanco */
@@ -68,7 +80,7 @@ export const PRESENTATION_STYLES = `
   to { opacity: 1; }
 }
 
-/* Título principal - RESPONSIVO con colores claros */
+/* Título principal - RESPONSIVO */
 .main-title-modern {
   position: relative !important;
   z-index: 2 !important;
@@ -79,301 +91,68 @@ export const PRESENTATION_STYLES = `
 .main-title-modern h1 {
   font-size: var(--font-size-hero) !important;
   font-weight: bold !important;
-  color: #1e293b !important;
+  color: white !important;
   margin-bottom: var(--spacing-sm) !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
   line-height: 1.2 !important;
   letter-spacing: -0.5px !important;
 }
 
 .main-title-modern p {
   font-size: var(--font-size-lg) !important;
-  color: #64748b !important;
+  color: rgba(255, 255, 255, 0.9) !important;
   margin-top: var(--spacing-sm) !important;
   line-height: 1.4 !important;
   font-weight: 300 !important;
 }
 
-/* Contenedor para la tarjeta */
-.presentation-view .card-image-container {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  margin: 30px 0 !important;
-  position: relative !important;
-  width: 100% !important;
-  z-index: 2 !important;
-  min-height: 170px !important; /* Asegurar espacio mínimo */
-}
-
-/* Tarjeta estática */
-.presentation-view .card-image-static {
-  position: relative !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  width: 100% !important;
-  opacity: 1 !important;
-}
-
-/* Animación de entrada para la tarjeta */
-@keyframes cardEntrance {
-  0% { opacity: 0; transform: translateY(20px) scale(0.95); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
-}
-@-webkit-keyframes cardEntrance {
-  0% { opacity: 0; -webkit-transform: translateY(20px) scale(0.95); }
-  100% { opacity: 1; -webkit-transform: translateY(0) scale(1); }
-}
-@-moz-keyframes cardEntrance {
-  0% { opacity: 0; -moz-transform: translateY(20px) scale(0.95); }
-  100% { opacity: 1; -moz-transform: translateY(0) scale(1); }
-}
-
-/* Tarjeta de crédito estática con estilo rosa */
-.presentation-view .card-image-container .credit-card-static {
+/* Tarjeta de crédito - RESPONSIVA */
+.credit-card {
   position: relative !important;
   z-index: 2 !important;
-  width: 250px !important; /* Ancho fijo para evitar problemas */
-  height: 150px !important; /* Alto fijo para evitar problemas */
-  margin: 25px auto !important;
-  background-color: #e91e63 !important; /* Color sólido como fallback */
-  background: linear-gradient(135deg, #e91e63, #d81b60) !important;
-  border-radius: 10px !important;
+  width: clamp(162px, 40.5vw, 252px) !important; /* ~10% smaller */
+  height: clamp(99px, 25.2vw, 153px) !important;  /* ~10% smaller */
+  margin: var(--spacing-lg) auto !important;
+  background:
+    radial-gradient(120% 60% at 0% 0%, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.1) 35%, rgba(255,255,255,0) 60%) ,
+    linear-gradient(135deg, #f7f7fa, #e5e6ee 40%, #d8d9e4) !important;
+  border-radius: var(--border-radius) !important;
   box-shadow: 
-    0 8px 24px rgba(233, 30, 99, 0.4),
-    0 4px 12px rgba(233, 30, 99, 0.2) !important;
-  overflow: visible !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  display: flex !important;
-  flex-direction: column !important;
-  color: white !important;
-  opacity: 1 !important;
-  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+  overflow: hidden !important;
+  transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) !important;
+  transition: transform 0.3s ease !important;
 }
 
-.credit-card-static:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 
-    0 12px 32px rgba(0, 0, 0, 0.12),
-    0 6px 16px rgba(0, 0, 0, 0.08) !important;
+.credit-card:hover {
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) !important;
 }
 
-/* Chip de la tarjeta */
-.presentation-view .credit-card-static .card-chip {
-  width: 30px !important;
-  height: 24px !important;
-  background: transparent !important;
-  position: absolute !important;
-  top: 30px !important;
-  left: 30px !important;
-  z-index: 3 !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
-
-/* Brillo de la tarjeta */
-.presentation-view .credit-card-static .card-shine {
-  position: absolute !important;
-  top: 100px !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.25) 0%,
-    rgba(255, 255, 255, 0) 60%
-  ) !important;
-  z-index: 2 !important;
-  pointer-events: none !important;
-}
-
-/* Marca de la tarjeta - ocultamos según petición */
-.presentation-view .credit-card-static .card-brand {
-  display: none !important; /* Ocultamos la marca dentro de la tarjeta */
-}
-
-/* Número de la tarjeta */
-.presentation-view .credit-card-static .card-number {
-  position: absolute !important;
-  bottom: 20px !important;
-  left: 0 !important;
-  right: 0 !important;
-  text-align: center !important;
-  z-index: 3 !important;
-}
-
-.presentation-view .credit-card-static .card-number span {
-  font-size: 14px !important;
-  color: white !important;
-  font-weight: 600 !important;
-  letter-spacing: 1.5px !important;
-  font-family: 'monospace', 'Courier New', monospace !important;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
-}
-
-/* Brillo de la tarjeta */
-.credit-card-static .card-shine {
+.credit-card::before {
+  content: "" !important;
   position: absolute !important;
   top: 0 !important;
   left: 0 !important;
-  right: 0 !important;
+  width: 100% !important;
   height: 100% !important;
-  background: radial-gradient(
-    circle at 50% 10%,
-    rgba(255, 255, 255, 0.35) 0%,
-    rgba(255, 255, 255, 0.1) 40%,
-    rgba(255, 255, 255, 0) 70%
-  ) !important;
+  background:
+    linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 4px) !important; /* subtle texture */
   z-index: 1 !important;
-  pointer-events: none !important;
 }
 
-/* Marca de la tarjeta - no visible en la imagen de referencia */
-.credit-card-static .card-brand {
-  display: none !important;
-}
-
-/* Número de la tarjeta */
-.credit-card-static .card-number {
+/* brand strip */
+.credit-card::after {
+  content: "" !important;
   position: absolute !important;
-  bottom: clamp(15px, 3.5vw, 25px) !important;
+  top: 0 !important;
   left: 0 !important;
-  right: 0 !important;
-  text-align: center !important;
-  z-index: 2 !important;
-}
-
-.credit-card-static .card-number span {
-  font-size: clamp(10px, 2.8vw, 14px) !important;
-  color: #ffffff !important;
-  font-weight: 600 !important;
-  letter-spacing: 1.5px !important;
-  font-family: 'OCR A Std', 'Courier New', monospace !important;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
-}
-
-/* Evitar que el hover afecte durante la animación */
-.card-flip-animation .credit-card:hover {
-  transform: none !important;
-  -webkit-transform: none !important;
-  -moz-transform: none !important;
-}
-
-/* Estilos específicos para navegadores problemáticos */
-.safari-browser .card-flip-animation {
-  transform: rotateY(0deg) !important;
-  -webkit-transform: rotateY(0deg) !important;
-  animation: safariFlip 1.5s ease-in-out forwards !important;
-  -webkit-animation: safariFlip 1.5s ease-in-out forwards !important;
-}
-
-@keyframes safariFlip {
-  0% { transform: rotateY(0deg) scale(1); opacity: 1; }
-  10% { transform: rotateY(36deg) scale(1.05); }
-  20% { transform: rotateY(72deg) scale(1.1); opacity: 0.8; }
-  30% { transform: rotateY(108deg) scale(1.05); opacity: 0.6; }
-  40% { transform: rotateY(144deg) scale(1); opacity: 0.4; }
-  50% { transform: rotateY(180deg) scale(0.95); opacity: 0.5; }
-  60% { transform: rotateY(216deg) scale(1); opacity: 0.6; }
-  70% { transform: rotateY(252deg) scale(1.05); opacity: 0.8; }
-  80% { transform: rotateY(288deg) scale(1.1); opacity: 0.9; }
-  90% { transform: rotateY(324deg) scale(1.05); }
-  100% { transform: rotateY(360deg) scale(1); opacity: 1; }
-}
-
-@-webkit-keyframes safariFlip {
-  0% { -webkit-transform: rotateY(0deg) scale(1); opacity: 1; }
-  10% { -webkit-transform: rotateY(36deg) scale(1.05); }
-  20% { -webkit-transform: rotateY(72deg) scale(1.1); opacity: 0.8; }
-  30% { -webkit-transform: rotateY(108deg) scale(1.05); opacity: 0.6; }
-  40% { -webkit-transform: rotateY(144deg) scale(1); opacity: 0.4; }
-  50% { -webkit-transform: rotateY(180deg) scale(0.95); opacity: 0.5; }
-  60% { -webkit-transform: rotateY(216deg) scale(1); opacity: 0.6; }
-  70% { -webkit-transform: rotateY(252deg) scale(1.05); opacity: 0.8; }
-  80% { -webkit-transform: rotateY(288deg) scale(1.1); opacity: 0.9; }
-  90% { -webkit-transform: rotateY(324deg) scale(1.05); }
-  100% { -webkit-transform: rotateY(360deg) scale(1); opacity: 1; }
-}
-
-/* Fallback para navegadores sin soporte 3D completo */
-.ie-browser .card-flip-animation, 
-.edge-browser .card-flip-animation,
-.no-3d-support .card-flip-animation {
-  animation: fadeInOut 1.5s ease-in-out forwards !important;
-  -webkit-animation: fadeInOut 1.5s ease-in-out forwards !important;
-  -moz-animation: fadeInOut 1.5s ease-in-out forwards !important;
-  transform-style: flat !important;
-  -webkit-transform-style: flat !important;
-}
-
-@keyframes fadeInOut {
-  0% { transform: scale(1) rotate(0deg); opacity: 1; }
-  25% { transform: scale(0.9) rotate(90deg); opacity: 0.7; }
-  50% { transform: scale(0.8) rotate(180deg); opacity: 0.5; }
-  75% { transform: scale(0.9) rotate(270deg); opacity: 0.7; }
-  100% { transform: scale(1) rotate(360deg); opacity: 1; }
-}
-
-@-webkit-keyframes fadeInOut {
-  0% { -webkit-transform: scale(1) rotate(0deg); opacity: 1; }
-  25% { -webkit-transform: scale(0.9) rotate(90deg); opacity: 0.7; }
-  50% { -webkit-transform: scale(0.8) rotate(180deg); opacity: 0.5; }
-  75% { -webkit-transform: scale(0.9) rotate(270deg); opacity: 0.7; }
-  100% { -webkit-transform: scale(1) rotate(360deg); opacity: 1; }
-}
-
-@-moz-keyframes fadeInOut {
-  0% { -moz-transform: scale(1) rotate(0deg); opacity: 1; }
-  25% { -moz-transform: scale(0.9) rotate(90deg); opacity: 0.7; }
-  50% { -moz-transform: scale(0.8) rotate(180deg); opacity: 0.5; }
-  75% { -moz-transform: scale(0.9) rotate(270deg); opacity: 0.7; }
-  100% { -moz-transform: scale(1) rotate(360deg); opacity: 1; }
-}
-
-/* Fallback adicional para Opera */
-.opera-browser .card-flip-animation {
-  animation: fadeInOut 1.5s ease-in-out forwards !important;
-  -o-animation: fadeInOut 1.5s ease-in-out forwards !important;
-}
-
-/* Animación de giro tipo moneda */
-@keyframes cardFlip {
-  0% { transform: rotateY(0deg); }
-  25% { transform: rotateY(90deg) scale(1.1); }
-  50% { transform: rotateY(180deg) scale(1); }
-  75% { transform: rotateY(270deg) scale(1.1); }
-  100% { transform: rotateY(calc(360deg * var(--num-rotations))); }
-}
-@-webkit-keyframes cardFlip {
-  0% { -webkit-transform: rotateY(0deg); }
-  25% { -webkit-transform: rotateY(90deg) scale(1.1); }
-  50% { -webkit-transform: rotateY(180deg) scale(1); }
-  75% { -webkit-transform: rotateY(270deg) scale(1.1); }
-  100% { -webkit-transform: rotateY(calc(360deg * var(--num-rotations))); }
-}
-@-moz-keyframes cardFlip {
-  0% { -moz-transform: rotateY(0deg); }
-  25% { -moz-transform: rotateY(90deg) scale(1.1); }
-  50% { -moz-transform: rotateY(180deg) scale(1); }
-  75% { -moz-transform: rotateY(270deg) scale(1.1); }
-  100% { -moz-transform: rotateY(calc(360deg * var(--num-rotations))); }
-}
-
-/* Clase que aplica la animación de giro */
-.card-flip-animation {
-  animation: cardFlip 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
-  -webkit-animation: cardFlip 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
-  -moz-animation: cardFlip 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
-  transform-origin: center center !important;
-  -webkit-transform-origin: center center !important;
-  -moz-transform-origin: center center !important;
-  backface-visibility: visible !important;
-  -webkit-backface-visibility: visible !important;
-  -moz-backface-visibility: visible !important;
-  will-change: transform !important; /* Mejora el rendimiento de la animación */
+  width: 100% !important;
+  height: 34% !important;
+  background: linear-gradient(90deg, rgba(233,30,99,0.12), rgba(233,30,99,0.06)) !important;
+  z-index: 0 !important;
 }
 
 /* Contenido de la tarjeta - RESPONSIVO */
@@ -383,8 +162,8 @@ export const PRESENTATION_STYLES = `
   justify-content: space-between !important;
   align-items: center !important;
   background: linear-gradient(90deg, 
-    rgba(233, 30, 99, 0.05) 0%, 
-    rgba(233, 30, 99, 0.02) 100%) !important;
+    rgba(233, 30, 99, 0.1) 0%, 
+    rgba(233, 30, 99, 0.05) 100%) !important;
 }
 
 .card-logos {
@@ -402,43 +181,72 @@ export const PRESENTATION_STYLES = `
 }
 
 .card-chip {
-  width: 30px !important;
-  height: 24px !important;
-  background: transparent !important;
-  position: absolute !important;
-  top: 25px !important;
-  left: 20px !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  z-index: 3 !important;
+  width: clamp(20px, 5vw, 32px) !important;
+  height: clamp(16px, 4vw, 24px) !important;
+  background: linear-gradient(45deg, #d4af37, #ffd700) !important;
+  border-radius: 3px !important;
+  position: relative !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(0, 0, 0, 0.2),
+    0 1px 3px rgba(0, 0, 0, 0.1) !important;
 }
 
+/* Marca y brillo de la tarjeta */
 .card-brand {
   position: absolute !important;
   top: clamp(8px, 2vw, 12px) !important;
   left: clamp(10px, 2.5vw, 14px) !important;
   font-size: clamp(10px, 2.8vw, 12px) !important;
   font-weight: bold !important;
-  color: #e91e63 !important;
+  color: #c2185b !important;
   text-transform: uppercase !important;
   letter-spacing: 0.6px !important;
   z-index: 2 !important;
 }
 
-.card-number {
+.presentation-view .card-image-container { display: flex !important; justify-content: center !important; }
+.card-image { position: relative !important; }
+.card-shine {
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,0.35) 50%, transparent 60%) !important;
+  mix-blend-mode: screen !important;
+  pointer-events: none !important;
+}
+
+.card-chip::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 60% !important;
+  height: 60% !important;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.1) 0px,
+    rgba(0, 0, 0, 0.1) 2px,
+    transparent 2px,
+    transparent 4px
+  ) !important;
+}
+
+
+.presentation-view .card-number {
   text-align: center !important;
   margin: var(--spacing-md) 0 !important;
   position: relative !important;
   z-index: 2 !important;
 }
 
-.card-number span {
+
+.presentation-view .card-number span {
   font-size: clamp(12px, 3.4vw, 15px) !important;
-  color: #475569 !important;
+  color: #2f2f2f !important;
   font-weight: 600 !important;
   letter-spacing: 2.2px !important;
   font-family: 'OCR A Std', 'Courier New', monospace !important;
+  text-shadow: 0.5px 0.5px 0 #ffffff, -0.5px -0.5px 0 rgba(0,0,0,0.15) !important; /* embossed */
 }
 
 .card-footer {
@@ -451,7 +259,7 @@ export const PRESENTATION_STYLES = `
 
 .card-holder {
   font-size: clamp(9px, 2.4vw, 11px) !important;
-  color: #64748b !important;
+  color: #5a5a5a !important;
   font-weight: 700 !important;
   text-transform: uppercase !important;
   letter-spacing: 0.5px !important;
@@ -459,13 +267,13 @@ export const PRESENTATION_STYLES = `
 
 .card-expiry {
   font-size: clamp(9px, 2.4vw, 11px) !important;
-  color: #64748b !important;
+  color: #5a5a5a !important;
   font-weight: 700 !important;
   font-family: 'OCR A Std', 'Courier New', monospace !important;
   letter-spacing: 1.2px !important;
 }
 
-/* Sección de beneficios con colores claros */
+/* Sección de beneficios - RESPONSIVA */
 .benefits-section-modern {
   position: relative !important;
   z-index: 2 !important;
@@ -478,9 +286,10 @@ export const PRESENTATION_STYLES = `
 
 .benefits-title-modern h2 {
   font-size: var(--font-size-xl) !important;
-  color: #1e293b !important;
+  color: white !important;
   margin-bottom: var(--spacing-lg) !important;
   font-weight: bold !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
   line-height: 1.3 !important;
 }
 
@@ -488,32 +297,65 @@ export const PRESENTATION_STYLES = `
   display: grid !important;
   grid-template-columns: repeat(auto-fit, minmax(clamp(140px, 35vw, 200px), 1fr)) !important;
   gap: var(--spacing-md) !important;
-  align-items: stretch !important;
+  align-items: stretch !important; /* ensure equal height within row */
   justify-content: center !important;
   padding: 0 var(--spacing-sm) !important;
 }
 
-/* Tarjetas de beneficios con estilo claro */
+/* Alinear estilos para la clase usada en el JSX */
 .benefit-card-modern {
-  background: #ffffff !important;
+  background: rgba(255, 255, 255, 0.1) !important;
   border-radius: var(--border-radius) !important;
   padding: var(--spacing-md) !important;
   text-align: center !important;
-  border: 1px solid #e2e8f0 !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
   transition: all 0.3s ease !important;
   min-height: clamp(120px, 25vw, 160px) !important;
-  height: 100% !important;
+  height: 100% !important; /* fill row height */
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
   align-items: center !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
 }
 
-.benefit-card-modern:hover {
+.benefit-card-modern.highlight {
+  border-color: rgba(255,255,255,0.35) !important;
+}
+
+/* Contenido interno de los beneficios */
+.benefit-percent, .benefit-value, .benefit-icon {
+  font-weight: 800 !important;
+  font-size: clamp(16px, 6.5vw, 28px) !important;
+  line-height: 1 !important;
+}
+
+.benefit-desc { text-align: center !important; }
+.benefit-desc strong { font-size: var(--font-size-md) !important; }
+.benefit-desc p { font-size: var(--font-size-sm) !important; opacity: 0.95 !important; }
+
+/* Beneficio individual - RESPONSIVO */
+.benefit-item-modern {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: var(--border-radius) !important;
+  padding: var(--spacing-md) !important;
+  text-align: center !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  transition: all 0.3s ease !important;
+  min-height: clamp(120px, 25vw, 160px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.benefit-item-modern:hover {
   transform: translateY(-4px) !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
-  border-color: #e91e63 !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
 }
 
 .benefit-icon-wrapper {
@@ -523,19 +365,20 @@ export const PRESENTATION_STYLES = `
   align-items: center !important;
   width: clamp(40px, 10vw, 60px) !important;
   height: clamp(40px, 10vw, 60px) !important;
-  background: #fdf2f8 !important;
+  background: rgba(255, 255, 255, 0.2) !important;
   border-radius: 50% !important;
-  border: 2px solid #fbcfe8 !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
 }
 
 .benefit-icon {
   font-size: clamp(18px, 5vw, 28px) !important;
-  color: #e91e63 !important;
+  color: white !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)) !important;
 }
 
 .benefit-text h3 {
   font-size: var(--font-size-md) !important;
-  color: #1e293b !important;
+  color: white !important;
   margin-bottom: var(--spacing-xs) !important;
   font-weight: bold !important;
   line-height: 1.3 !important;
@@ -543,12 +386,12 @@ export const PRESENTATION_STYLES = `
 
 .benefit-text p {
   font-size: var(--font-size-sm) !important;
-  color: #64748b !important;
+  color: rgba(255, 255, 255, 0.9) !important;
   line-height: 1.4 !important;
   margin: 0 !important;
 }
 
-/* Botón de acción con estilo claro */
+/* Botón de acción - RESPONSIVO */
 .action-section-modern {
   position: relative !important;
   z-index: 2 !important;
@@ -557,8 +400,8 @@ export const PRESENTATION_STYLES = `
 }
 
 .action-button-modern {
-  background: linear-gradient(135deg, #e91e63, #f06292) !important;
-  color: white !important;
+  background: linear-gradient(135deg, #fff, #f0f0f0) !important;
+  color: #e91e63 !important;
   border: none !important;
   padding: var(--spacing-md) var(--spacing-xl) !important;
   border-radius: 50px !important;
@@ -569,8 +412,9 @@ export const PRESENTATION_STYLES = `
   text-transform: uppercase !important;
   letter-spacing: 1px !important;
   box-shadow: 
-    0 6px 20px rgba(233, 30, 99, 0.3),
-    0 2px 8px rgba(233, 30, 99, 0.2) !important;
+    0 6px 20px rgba(0, 0, 0, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
   border: 2px solid transparent !important;
   outline: none !important;
   display: block !important;
@@ -581,14 +425,239 @@ export const PRESENTATION_STYLES = `
 
 .action-button-modern:hover {
   transform: translateY(-2px) scale(1.02) !important;
+  background: linear-gradient(135deg, #ffffff, #f8f8f8) !important;
   box-shadow: 
-    0 8px 24px rgba(233, 30, 99, 0.4),
-    0 4px 12px rgba(233, 30, 99, 0.25) !important;
+    0 8px 24px rgba(0, 0, 0, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
 }
+
+/* Badge promocional compacto */
+.promo-badge {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: var(--spacing-xs) !important;
+  margin: var(--spacing-md) 0 !important;
+  color: rgba(255,255,255,0.95) !important;
+}
+.promo-icon { font-size: var(--font-size-md) !important; opacity: 0.9 !important; }
+.promo-tagline { font-size: var(--font-size-sm) !important; font-weight: 600 !important; }
+
+/* Instrucción simple compacta */
+.simple-instruction-container { 
+  display: flex !important; align-items: center !important; justify-content: center !important; 
+  gap: var(--spacing-sm) !important; margin: var(--spacing-md) 0 clamp(2px, 0.6vh, 6px) !important; 
+}
+.instruction-icon { opacity: 0.95 !important; }
+.simple-instruction { font-size: var(--font-size-md) !important; }
+
+/* Botón iniciar específico (hereda de .btn .btn-primary) */
+.btn-start-modern { margin-top: auto !important; }
+
+/* Footer legal compacto */
+.legal-footer-modern { margin-top: clamp(2px, 0.8vh, 8px) !important; padding-top: var(--spacing-xs) !important; opacity: 0.85 !important; }
+.legal-footer-modern p { font-size: var(--font-size-xs) !important; }
+.legal-footer-modern .footer-link { color: #fff !important; text-decoration: underline !important; display: inline !important; }
 
 .action-button-modern:active {
   transform: translateY(0) scale(0.98) !important;
   box-shadow: 
-    0 4px 16px rgba(233, 30, 99, 0.3) !important;
+    0 4px 16px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+/* RESPONSIVE BREAKPOINTS ESPECÍFICOS PARA PRESENTACIÓN */
+
+/* Smartphones pequeños (hasta 374px) */
+@media screen and (max-width: 374px) {
+  .presentation-view {
+    padding: 12px !important;
+  }
+  
+  .main-title-modern h1 {
+    font-size: 24px !important;
+  }
+  
+  .credit-card {
+    width: 160px !important;
+    height: 100px !important;
+    margin: 16px auto !important;
+  }
+  
+  .benefits-grid-modern {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  
+  .benefit-item-modern {
+    min-height: 100px !important;
+    padding: 12px !important;
+  }
+}
+
+/* Ultra-compact phones (320px–359px) */
+@media screen and (min-width: 320px) and (max-width: 359px) {
+  .main-title-modern { margin-bottom: var(--spacing-sm) !important; }
+  .benefits-grid-modern { grid-template-columns: 1fr !important; gap: 10px !important; }
+  .benefit-card-modern { 
+    min-height: 79px !important; /* ~10% shorter */
+    padding: 8px 10px !important; 
+    flex-direction: row !important; 
+    align-items: center !important; 
+    justify-content: flex-start !important; 
+    gap: 8px !important; 
+    height: auto !important; 
+  }
+  .benefit-icon-wrapper { width: 30px !important; height: 30px !important; margin-bottom: 0 !important; flex-shrink: 0 !important; }
+  .benefit-percent, .benefit-value, .benefit-icon { font-size: clamp(13px, 5.5vw, 17px) !important; }
+  .benefit-desc { text-align: left !important; }
+  .benefit-desc strong { font-size: var(--font-size-sm) !important; line-height: 1.2 !important; }
+  .benefit-desc p { font-size: var(--font-size-xs) !important; line-height: 1.2 !important; }
+  .promo-badge { margin: 8px 0 6px !important; }
+  .credit-card { width: 146px !important; height: 90px !important; margin: 10px auto !important; }
+  .simple-instruction-container { margin: 8px 0 0 !important; gap: 8px !important; }
+}
+
+/* Corrección para Galaxy S8+ (360px-374px): 2 columnas y espaciado reducido */
+@media screen and (min-width: 360px) and (max-width: 374px) {
+  .main-title-modern { margin-bottom: var(--spacing-sm) !important; }
+  .main-title-modern h1 { line-height: 1.15 !important; }
+
+  .benefits-grid-modern { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  .benefit-card-modern { 
+    min-height: 96px !important; 
+    padding: 10px 12px !important; 
+    flex-direction: row !important; 
+    align-items: center !important; 
+    justify-content: flex-start !important; 
+    gap: 10px !important; 
+    height: auto !important; 
+  }
+  .benefit-icon-wrapper { width: 34px !important; height: 34px !important; margin-bottom: 0 !important; flex-shrink: 0 !important; }
+  .benefit-percent, .benefit-value, .benefit-icon { font-size: clamp(14px, 5.5vw, 18px) !important; }
+  .benefit-desc { text-align: left !important; }
+  .benefit-desc strong { font-size: var(--font-size-sm) !important; line-height: 1.2 !important; }
+  .benefit-desc p { font-size: var(--font-size-xs) !important; line-height: 1.2 !important; }
+
+  .promo-badge { margin: 8px 0 6px !important; }
+  .promo-tagline { font-size: 13px !important; }
+
+  .credit-card { width: 150px !important; height: 94px !important; margin: 12px auto !important; }
+
+  .simple-instruction-container { margin: 8px 0 2px !important; gap: 8px !important; }
+  .simple-instruction-container .instruction-icon svg { width: 14px !important; height: 14px !important; }
+  .simple-instruction { font-size: 14px !important; }
+
+  .btn-start-modern { margin-top: auto !important; }
+}
+
+/* Smartphones estándar (375px - 413px) */
+@media screen and (min-width: 375px) and (max-width: 413px) {
+  .benefits-grid-modern { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+  .benefit-card-modern { min-height: 116px !important; }
+  .promo-badge { margin: 10px 0 8px !important; }
+  .credit-card { margin: 14px auto !important; }
+  .simple-instruction-container { margin: 10px 0 4px !important; }
+}
+
+/* Smartphones grandes y phablets (414px - 767px) */
+@media screen and (min-width: 414px) and (max-width: 767px) {
+  .main-title-modern { margin-bottom: var(--spacing-md) !important; }
+  .benefits-grid-modern { grid-template-columns: repeat(2, 1fr) !important; gap: 14px !important; }
+  .benefit-card-modern { min-height: 120px !important; }
+  .promo-badge { margin: 10px 0 8px !important; }
+  .credit-card { width: 220px !important; height: 140px !important; margin: 12px auto !important; }
+  .simple-instruction-container { margin: 10px 0 0 !important; gap: 10px !important; }
+  .simple-instruction { font-size: 15px !important; }
+  .btn-start-modern { margin-top: auto !important; }
+}
+
+/* Tabletas (768px+) */
+@media screen and (min-width: 768px) {
+  .benefits-grid-modern {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 32px !important;
+    max-width: 600px !important;
+    margin: 0 auto !important;
+  }
+  
+  .credit-card {
+    width: 280px !important;
+    height: 170px !important;
+  }
+  
+  .action-button-modern {
+    min-width: 320px !important;
+    padding: 20px 48px !important;
+  }
+}
+
+/* iPad mini (768px-834px) reduce verticalidad */
+@media screen and (min-width: 768px) and (max-width: 834px) {
+  .main-title-modern { margin-bottom: var(--spacing-md) !important; }
+  .credit-card { margin: var(--spacing-lg) auto !important; width: 260px !important; height: 158px !important; }
+  .benefits-grid-modern { gap: 22px !important; }
+  .promo-badge { margin: 12px 0 10px !important; }
+  .simple-instruction-container { margin: 12px 0 0 !important; }
+  .action-button-modern { margin-top: var(--spacing-md) !important; }
+}
+
+/* Compactación por altura para que quepa todo el contenido */
+@media screen and (max-height: 820px) {
+  .presentation-view { padding-top: clamp(8px, 2vh, 16px) !important; }
+  .main-title-modern { margin-bottom: var(--spacing-sm) !important; }
+  .main-title-modern h1 { font-size: clamp(22px, 6.5vw, 30px) !important; }
+  .benefits-section-modern { margin-top: var(--spacing-md) !important; gap: var(--spacing-sm) !important; }
+  .benefits-grid-modern { gap: clamp(8px, 2.5vw, 16px) !important; align-items: stretch !important; }
+  .benefit-card-modern { min-height: clamp(100px, 22vw, 140px) !important; padding: clamp(10px, 2.8vw, 14px) !important; height: 100% !important; }
+  .benefit-icon-wrapper { width: clamp(36px, 9vw, 52px) !important; height: clamp(36px, 9vw, 52px) !important; }
+  .credit-card { width: clamp(180px, 55vw, 260px) !important; height: clamp(110px, 35vw, 158px) !important; margin: clamp(8px, 2vh, 16px) auto !important; }
+  .btn { font-size: clamp(14px, 3.6vw, 16px) !important; padding: clamp(10px, 2.8vw, 14px) clamp(20px, 6vw, 28px) !important; }
+}
+
+/* Slightly shorter phones: compress a bit more */
+@media screen and (max-height: 780px) and (min-width: 360px) and (max-width: 480px) {
+  .benefits-grid-modern { gap: 10px !important; }
+  .promo-badge { margin: 8px 0 6px !important; }
+  .credit-card { margin: 10px auto !important; }
+  .simple-instruction-container { margin: 8px 0 0 !important; }
+}
+/* iPhone SE-like height (e.g., 375x667): compact horizontal benefit cards */
+@media screen and (min-width: 375px) and (max-width: 413px) and (max-height: 740px) {
+  .benefit-card-modern {
+    min-height: 56px !important; /* ~10% shorter */
+    padding: 8px 12px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    height: auto !important;
+  }
+  .benefit-icon-wrapper { width: 32px !important; height: 32px !important; margin-bottom: 0 !important; flex-shrink: 0 !important; }
+  .benefit-percent, .benefit-value, .benefit-icon { font-size: clamp(13px, 5vw, 17px) !important; }
+  .benefit-desc { text-align: left !important; }
+  .benefit-desc strong { font-size: var(--font-size-sm) !important; line-height: 1.2 !important; }
+  .benefit-desc p { font-size: var(--font-size-xs) !important; line-height: 1.2 !important; }
+}
+
+@media screen and (max-height: 700px) {
+  .benefits-grid-modern { grid-template-columns: 1fr !important; }
+  .main-title-modern h1 { font-size: clamp(20px, 6vw, 26px) !important; }
+  .credit-card { width: clamp(160px, 60vw, 220px) !important; height: clamp(100px, 34vw, 140px) !important; }
+  .legal-footer-modern { margin-top: clamp(4px, 1vh, 10px) !important; }
+}
+
+/* Tabletas grandes (1024px+) */
+@media screen and (min-width: 1024px) {
+  .presentation-view {
+    max-width: 800px !important;
+  }
+  
+  .benefits-grid-modern {
+    grid-template-columns: repeat(2, 1fr) !important;
+    max-width: 700px !important;
+  }
 }
 `;

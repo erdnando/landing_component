@@ -72,20 +72,12 @@ const PresentationView: React.FC<PresentationViewProps> = ({ onNext }) => {
       {/* Tarjeta de crédito simplificada */}
       <div className="card-image-container">
         <div className="credit-card-static">
-          <div className="card-shine"></div>
-          <div >
-            <svg width="85" height="70" viewBox="0 0 24 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="24" height="18" rx="2" fill="#D4AF37" stroke="rgba(255,255,255,0.7)" strokeWidth="1" />
-              <rect x="2" y="4" width="10" height="4" rx="1" fill="rgba(255,255,255,0.7)" />
-              <line x1="2" y1="10" x2="22" y2="10" stroke="rgba(255,255,255,0.7)" strokeWidth="1" />
-              <line x1="2" y1="12" x2="22" y2="12" stroke="rgba(255,255,255,0.7)" strokeWidth="1" />
-              <line x1="2" y1="14" x2="12" y2="14" stroke="rgba(255,255,255,0.7)" strokeWidth="1" />
-            </svg>
-          </div>
+          {/* <div className="card-shine"></div> */}
+         
           {/* Eliminamos la línea de card-brand para que la tarjeta se muestre correctamente */}
-          {/* <div className="card-number">
+           <div className="card-number">
             <span>**** **** **** 2458</span>
-          </div> */}
+          </div> 
         </div>
       </div>
 
