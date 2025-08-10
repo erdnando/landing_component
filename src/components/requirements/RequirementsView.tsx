@@ -31,8 +31,8 @@ export const RequirementsView = ({ onContinue, bannerImage }: RequirementsViewPr
       {isLoading && (
         <div className="glass-loader">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" fill="rgba(233, 30, 99, 0.2)"/>
-            <path d="M12 2v4c4.42 0 8 3.58 8 8s-3.58 8-8 8v4c6.63 0 12-5.37 12-12S18.63 2 12 2z" fill="#e91e63">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" fill="rgba(194, 24, 91, 0.15)"/>
+            <path d="M12 2v4c4.42 0 8 3.58 8 8s-3.58 8-8 8v4c6.63 0 12-5.37 12-12S18.63 2 12 2z" fill="#c2185b">
               <animateTransform 
                 attributeName="transform" 
                 type="rotate"

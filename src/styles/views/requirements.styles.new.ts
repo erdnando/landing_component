@@ -11,14 +11,14 @@ export const REQUIREMENTS_STYLES = `
   min-height: 100vh !important;
   height: 100vh !important; /* Asegura que ocupe toda la altura disponible */
   
-  /* Fondo blanco con degradado sutil tipo gainsbourg */
+  /* Fondo blanco con degradado sutil mejorado para mejor balance de colores */
   background: 
     /* Capa 1: Fondo base blanco */
     white,
-    /* Capa 2: Degradado sutil */
-    radial-gradient(circle at center top, rgba(255, 222, 235, 0.7) 0%, transparent 70%),
-    /* Capa 3: Degradado adicional para textura */
-    radial-gradient(circle at bottom right, rgba(250, 209, 226, 0.6) 0%, transparent 60%) !important;
+    /* Capa 2: Degradado sutil azulado para complementar el rosa */
+    radial-gradient(circle at center top, rgba(236, 240, 255, 0.7) 0%, transparent 70%),
+    /* Capa 3: Degradado rosa más suave */
+    radial-gradient(circle at bottom right, rgba(250, 209, 226, 0.4) 0%, transparent 60%) !important;
   
   /* Sombra interna para efecto de profundidad */
   box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.03) !important;
@@ -58,10 +58,10 @@ export const REQUIREMENTS_STYLES = `
   }
 }
 
-/* Header con banner y logos - versión suave */
+/* Header con banner y logos - versión mejorada */
 .header-banner {
   width: 100% !important;
-  background: rgba(255, 110, 150, 0.85) !important; /* Color rosa más suave */
+  background: rgba(194, 24, 91, 0.9) !important; /* Color base más oscuro para mejor contraste */
   backdrop-filter: blur(8px) !important; /* Efecto de desenfoque de fondo */
   -webkit-backdrop-filter: blur(8px) !important; /* Para Safari */
   background-size: cover !important;
@@ -69,9 +69,9 @@ export const REQUIREMENTS_STYLES = `
   background-repeat: no-repeat !important;
   position: relative !important;
   overflow: hidden !important;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 600 160"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:%23e91e63;stop-opacity:0.75" /><stop offset="100%" style="stop-color:%23ff6090;stop-opacity:0.75" /></linearGradient></defs><rect width="600" height="160" fill="url(%23grad)"/></svg>') !important; /* Gradiente con transparencia */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4) !important; /* Borde inferior más visible */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important; /* Sombra sutil */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 600 160"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:%23ad1457;stop-opacity:0.9" /><stop offset="100%" style="stop-color:%23d81b60;stop-opacity:0.9" /></linearGradient></defs><rect width="600" height="160" fill="url(%23grad)"/></svg>') !important; /* Gradiente más oscuro para mejor contraste */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important; /* Borde inferior más visible */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important; /* Sombra sutil pero efectiva */
 }
 
 /* Para usar una imagen externa, habilitamos esta opción: */
@@ -158,7 +158,7 @@ export const REQUIREMENTS_STYLES = `
 
 /* Contenido principal con efecto glassmorphism */
 .requirements-title {
-  color: #e91e63 !important; /* Cambiado a rosa para mejor contraste con fondo blanco */
+  color: #d81b60 !important; /* Rosa más oscuro para mejor balance y legibilidad */
   font-size: clamp(1.5rem, 4vw, 2rem) !important;
   font-weight: 700 !important;
   text-align: center !important; /* Centrado para alinear con el panel */
@@ -183,14 +183,14 @@ export const REQUIREMENTS_STYLES = `
 
 /* Estilo para el panel interno, similar a la tarjeta de mensualidad */
 .subtitle-content {
-  background: #e91e63 !important; /* Fondo rosa sólido como en la imagen */
+  background: linear-gradient(135deg, #d81b60, #e91e63) !important; /* Gradiente para más profundidad visual */
   color: white !important; /* Texto blanco como en la imagen */
   font-size: clamp(1rem, 2.8vw, 1.2rem) !important; /* Ligeramente más grande */
   font-weight: 600 !important;
   padding: clamp(16px, 4vw, 20px) !important; /* Mismo padding que las tarjetas */
   border-radius: clamp(16px, 4vw, 20px) !important; /* Mismo border-radius que las tarjetas */
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important; /* Misma sombra que las tarjetas */
-  border: 1px solid rgba(255, 255, 255, 0.2) !important; /* Borde sutil */
+  border: 1px solid rgba(255, 255, 255, 0.3) !important; /* Borde más visible */
   display: block !important; /* Block en lugar de inline-block para tomar todo el ancho */
   width: 100% !important; /* Ancho completo para coincidir con la imagen */
   margin: 0 !important; /* Sin margen para ocupar todo el espacio */
@@ -238,7 +238,7 @@ export const REQUIREMENTS_STYLES = `
 }
 
 .requirement-card {
-  background: rgba(255, 255, 255, 0.85) !important; /* Fondo semi-transparente */
+  background: rgba(255, 255, 255, 0.9) !important; /* Fondo más sólido para mejor contraste */
   backdrop-filter: blur(12px) !important; /* Efecto de desenfoque de fondo (glassmorphism) */
   -webkit-backdrop-filter: blur(12px) !important; /* Para Safari */
   border-radius: clamp(16px, 4vw, 20px) !important;
@@ -246,9 +246,10 @@ export const REQUIREMENTS_STYLES = `
   display: flex !important;
   align-items: center !important;
   box-shadow: 
-    0 8px 20px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6) !important; /* Borde superior brillante */
-  border: 1px solid rgba(255, 255, 255, 0.18) !important; /* Borde sutil */
+    0 8px 20px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important; /* Borde superior brillante más intenso */
+  border: 1px solid rgba(194, 24, 91, 0.08) !important; /* Borde con un toque sutil de color */
   transition: transform 0.3s, box-shadow 0.3s, backdrop-filter 0.3s !important;
   animation: fadeIn 0.5s ease-out backwards !important;
 }
@@ -275,15 +276,15 @@ export const REQUIREMENTS_STYLES = `
   justify-content: center !important;
   width: clamp(50px, 13vw, 60px) !important;
   height: clamp(50px, 13vw, 60px) !important;
-  background: #e91e63 !important; /* Fondo rosa sólido como en la imagen */
+  background: linear-gradient(135deg, #c2185b, #e91e63) !important; /* Gradiente para más profundidad */
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
   border-radius: 50% !important;
   margin-right: clamp(16px, 4vw, 20px) !important;
   box-shadow: 
-    0 4px 12px rgba(233, 30, 99, 0.25),
+    0 4px 12px rgba(194, 24, 91, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.3) !important; /* Brillo superior más intenso */
-  border: 1px solid rgba(255, 255, 255, 0.2) !important; /* Borde blanco sutil */
+  border: 1px solid rgba(255, 255, 255, 0.3) !important; /* Borde blanco más visible */
 }
 
 .requirement-icon svg {
@@ -297,14 +298,15 @@ export const REQUIREMENTS_STYLES = `
 }
 
 .requirement-title {
-  color: #e91e63 !important;
+  color: #c2185b !important; /* Rosa más oscuro para mejor contraste con las tarjetas blancas */
   font-size: clamp(0.95rem, 2.6vw, 1.1rem) !important;
   font-weight: 600 !important;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.03) !important; /* Sombra muy sutil para mejor legibilidad */
 }
 
 /* Botón de continuar con efecto glassmorphism - más destacado */
 .requirements-btn {
-  background: rgba(233, 30, 99, 0.8) !important; /* Fondo rosa más visible */
+  background: linear-gradient(135deg, #c2185b, #e91e63) !important; /* Gradiente para mayor profundidad visual */
   backdrop-filter: blur(10px) !important; /* Efecto de desenfoque de fondo */
   -webkit-backdrop-filter: blur(10px) !important; /* Para Safari */
   color: white !important; /* Texto blanco para mejor contraste */
@@ -316,7 +318,7 @@ export const REQUIREMENTS_STYLES = `
   cursor: pointer !important;
   transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s, border-color 0.3s, backdrop-filter 0.3s !important;
   box-shadow: 
-    0 6px 14px rgba(233, 30, 99, 0.25),
+    0 6px 14px rgba(194, 24, 91, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.6) !important; /* Brillo superior */
   position: relative !important;
   overflow: hidden !important;
@@ -325,6 +327,7 @@ export const REQUIREMENTS_STYLES = `
   justify-content: center !important;
   text-align: center !important;
   min-width: clamp(180px, 45vw, 300px) !important;
+  letter-spacing: 0.5px !important; /* Mejor espaciado de letras para legibilidad */
 }
 
 /* Efecto de onda al hacer click */
@@ -401,13 +404,13 @@ export const REQUIREMENTS_STYLES = `
   color: rgba(51, 51, 51, 0.9) !important; /* Color más oscuro para mejor legibilidad */
   font-size: clamp(0.8rem, 2.2vw, 0.9rem) !important;
   font-weight: 500 !important; /* Peso medio para mejor visibilidad */
-  background: rgba(233, 30, 99, 0.15) !important; /* Fondo rosa más visible */
+  background: rgba(194, 24, 91, 0.12) !important; /* Fondo rosa más sutil pero con mejor contraste */
   padding: 6px 15px !important; /* Padding aumentado */
   border-radius: 12px !important;
   backdrop-filter: blur(4px) !important;
   -webkit-backdrop-filter: blur(4px) !important;
-  border: 1px solid rgba(233, 30, 99, 0.25) !important; /* Borde rosa más visible */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important; /* Sombra sutil para destacar */
+  border: 1px solid rgba(194, 24, 91, 0.2) !important; /* Borde rosa más consistente */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important; /* Sombra sutil para destacar */
 }
 
 /* Animaciones mejoradas para efecto glassmorphism */
