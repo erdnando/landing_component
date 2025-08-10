@@ -1,4 +1,26 @@
+
 export const PRESENTATION_STYLES = `
+/* Efecto de brillo animado para la tarjeta */
+.credit-card-shine {
+  pointer-events: none !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 4 !important;
+  background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,0.55) 50%, transparent 60%) !important;
+  opacity: 0.0 !important;
+  animation: shine-move 2.8s linear infinite;
+}
+
+@keyframes shine-move {
+  0% { opacity: 0; transform: translateX(-80%) skewX(-18deg); }
+  35% { opacity: 0.7; }
+  50% { opacity: 0.9; transform: translateX(100%) skewX(-18deg); }
+  65% { opacity: 0.7; }
+  100% { opacity: 0; transform: translateX(180%) skewX(-18deg); }
+}
 /* Vista de presentación - BASE RESPONSIVA */
 .presentation-view {
   background: #e91e63 !important;
@@ -204,6 +226,7 @@ export const PRESENTATION_STYLES = `
   text-shadow: 0.5px 0.5px 0 #fff, -0.5px -0.5px 0 rgba(0,0,0,0.10) !important;
   z-index: 3 !important;
   position: relative !important;
+  right: 8px !important;
 }
 .credit-card-name {
   font-size: clamp(10px, 1.7vw, 14px) !important;

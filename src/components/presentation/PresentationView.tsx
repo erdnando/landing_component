@@ -81,6 +81,7 @@ const PresentationView: React.FC<PresentationViewProps> = ({ onNext }) => {
         </div>
       </div> */}
       <div className="credit-card">
+        <div className="credit-card-shine" />
         <div className="credit-card-chip"></div>
         <div className="credit-card-number">**** **** **** 2458</div>
         <div className="credit-card-name">NOMBRE APELLIDO</div>
