@@ -1,4 +1,3 @@
-
 export const PRESENTATION_STYLES = `
 /* Efecto de brillo animado para la tarjeta */
 .credit-card-shine {
@@ -23,6 +22,8 @@ export const PRESENTATION_STYLES = `
 }
 /* Vista de presentación - BASE RESPONSIVA */
 .presentation-view {
+  container-type: inline-size !important;
+  container-name: viewport !important;
   background: #e91e63 !important;
   background: linear-gradient(135deg, #e91e63, #c2185b) !important;
   color: white !important;
@@ -637,7 +638,7 @@ export const PRESENTATION_STYLES = `
 /* RESPONSIVE BREAKPOINTS ESPECÍFICOS PARA PRESENTACIÓN */
 
 /* Smartphones pequeños (hasta 374px) */
-@media screen and (max-width: 374px) {
+@container viewport (max-width: 374px) {
   .presentation-view {
     padding: 12px !important;
   }
@@ -664,7 +665,7 @@ export const PRESENTATION_STYLES = `
 }
 
 /* Ultra-compact phones (320px–359px) */
-@media screen and (min-width: 320px) and (max-width: 359px) {
+@container viewport (min-width: 320px) and (max-width: 359px) {
   .main-title-modern { margin-bottom: var(--spacing-sm) !important; }
   .benefits-grid-modern { grid-template-columns: 1fr !important; gap: 10px !important; }
   .benefit-card-modern { 
@@ -687,7 +688,7 @@ export const PRESENTATION_STYLES = `
 }
 
 /* Corrección para Galaxy S8+ (360px-374px): 2 columnas y espaciado reducido */
-@media screen and (min-width: 360px) and (max-width: 374px) {
+@container viewport (min-width: 360px) and (max-width: 374px) {
   .main-title-modern { margin-bottom: var(--spacing-sm) !important; }
   .main-title-modern h1 { line-height: 1.15 !important; }
 
@@ -702,7 +703,7 @@ export const PRESENTATION_STYLES = `
     height: auto !important; 
   }
   .benefit-icon-wrapper { width: 34px !important; height: 34px !important; margin-bottom: 0 !important; flex-shrink: 0 !important; }
-  .benefit-percent, .benefit-value, .benefit-icon { font-size: clamp(14px, 5.5vw, 18px) !important; }
+  .benefit_percent, .benefit-value, .benefit-icon { font-size: clamp(14px, 5.5vw, 18px) !important; }
   .benefit-desc { text-align: left !important; }
   .benefit-desc strong { font-size: var(--font-size-sm) !important; line-height: 1.2 !important; }
   .benefit-desc p { font-size: var(--font-size-xs) !important; line-height: 1.2 !important; }
@@ -713,14 +714,10 @@ export const PRESENTATION_STYLES = `
   .credit-card { width: 150px !important; height: 94px !important; margin: 12px auto !important; }
 
   .simple-instruction-container { margin: 8px 0 2px !important; gap: 8px !important; }
-  .simple-instruction-container .instruction-icon svg { width: 14px !important; height: 14px !important; }
-  .simple-instruction { font-size: 14px !important; }
-
-  .btn-start-modern { margin-top: auto !important; }
 }
 
 /* Smartphones estándar (375px - 413px) */
-@media screen and (min-width: 375px) and (max-width: 413px) {
+@container viewport (min-width: 375px) and (max-width: 413px) {
   .benefits-grid-modern { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
   .benefit-card-modern { min-height: 116px !important; }
   .promo-badge { margin: 10px 0 8px !important; }
@@ -729,7 +726,7 @@ export const PRESENTATION_STYLES = `
 }
 
 /* Smartphones grandes y phablets (414px - 767px) */
-@media screen and (min-width: 414px) and (max-width: 767px) {
+@container viewport (min-width: 414px) and (max-width: 767px) {
   .main-title-modern { margin-bottom: var(--spacing-md) !important; }
   .benefits-grid-modern { grid-template-columns: repeat(2, 1fr) !important; gap: 14px !important; }
   .benefit-card-modern { min-height: 120px !important; }
@@ -741,7 +738,7 @@ export const PRESENTATION_STYLES = `
 }
 
 /* Tabletas (768px+) */
-@media screen and (min-width: 768px) {
+@container viewport (min-width: 768px) {
   .benefits-grid-modern {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 32px !important;
@@ -761,7 +758,7 @@ export const PRESENTATION_STYLES = `
 }
 
 /* iPad mini (768px-834px) reduce verticalidad */
-@media screen and (min-width: 768px) and (max-width: 834px) {
+@container viewport (min-width: 768px) and (max-width: 834px) {
   .main-title-modern { margin-bottom: var(--spacing-md) !important; }
   .credit-card { margin: var(--spacing-lg) auto !important; width: 260px !important; height: 158px !important; }
   .benefits-grid-modern { gap: 22px !important; }
@@ -771,7 +768,7 @@ export const PRESENTATION_STYLES = `
 }
 
 /* Compactación por altura para que quepa todo el contenido */
-@media screen and (max-height: 820px) {
+@container viewport (max-height: 820px) {
   .presentation-view { padding-top: clamp(8px, 2vh, 16px) !important; }
   .main-title-modern { margin-bottom: var(--spacing-sm) !important; }
   .main-title-modern h1 { font-size: clamp(22px, 6.5vw, 30px) !important; }
@@ -784,14 +781,14 @@ export const PRESENTATION_STYLES = `
 }
 
 /* Slightly shorter phones: compress a bit more */
-@media screen and (max-height: 780px) and (min-width: 360px) and (max-width: 480px) {
+@container viewport (max-height: 780px) and (min-width: 360px) and (max-width: 480px) {
   .benefits-grid-modern { gap: 10px !important; }
   .promo-badge { margin: 8px 0 6px !important; }
   .credit-card { margin: 10px auto !important; }
   .simple-instruction-container { margin: 8px 0 0 !important; }
 }
 /* iPhone SE-like height (e.g., 375x667): compact horizontal benefit cards */
-@media screen and (min-width: 375px) and (max-width: 413px) and (max-height: 740px) {
+@container viewport (min-width: 375px) and (max-width: 413px) and (max-height: 740px) {
   .benefit-card-modern {
     min-height: 56px !important; /* ~10% shorter */
     padding: 8px 12px !important;
@@ -802,13 +799,13 @@ export const PRESENTATION_STYLES = `
     height: auto !important;
   }
   .benefit-icon-wrapper { width: 32px !important; height: 32px !important; margin-bottom: 0 !important; flex-shrink: 0 !important; }
-  .benefit-percent, .benefit-value, .benefit-icon { font-size: clamp(13px, 5vw, 17px) !important; }
+  .benefit_percent, .benefit-value, .benefit-icon { font-size: clamp(13px, 5vw, 17px) !important; }
   .benefit-desc { text-align: left !important; }
   .benefit-desc strong { font-size: var(--font-size-sm) !important; line-height: 1.2 !important; }
   .benefit-desc p { font-size: var(--font-size-xs) !important; line-height: 1.2 !important; }
 }
 
-@media screen and (max-height: 700px) {
+@container viewport (max-height: 700px) {
   .benefits-grid-modern { grid-template-columns: 1fr !important; }
   .main-title-modern h1 { font-size: clamp(20px, 6vw, 26px) !important; }
   .credit-card { width: clamp(160px, 60vw, 220px) !important; height: clamp(100px, 34vw, 140px) !important; }
@@ -816,7 +813,7 @@ export const PRESENTATION_STYLES = `
 }
 
 /* Tabletas grandes (1024px+) */
-@media screen and (min-width: 1024px) {
+@container viewport (min-width: 1024px) {
   .presentation-view {
     max-width: 800px !important;
   }

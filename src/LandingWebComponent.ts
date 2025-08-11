@@ -147,7 +147,7 @@ class LandingWebComponent extends HTMLElement {
     masterStyleContainer.appendChild(consolidatedStyles);
     
     // 6. Capturar estilos del DOM principal si están disponibles
-    try {
+    /* try {
       document.querySelectorAll('style, link[rel="stylesheet"]').forEach(element => {
         if (element.tagName === 'STYLE') {
           const content = element.textContent || '';
@@ -165,15 +165,15 @@ class LandingWebComponent extends HTMLElement {
       });
     } catch (e) {
       console.warn('Error copying external styles:', e);
-    }
+    } */
     
     // 3. Logging para debugging
-    console.log('🎨 Landing Component - Estilos cargados:', {
+   /*  console.log('🎨 Landing Component - Estilos cargados:', {
       microfrontendStylesConsolidated: true,
       consolidatedStyles: getAllCompiledStyles().length,
       masterStylesCount: masterStyleContainer.children.length,
       architecture: MICROFRONTEND_METADATA.architecture
-    });
+    }); */
     
     // CSS Reset básico (mantenido por compatibilidad)
     const cssReset = document.createElement('style');
@@ -192,7 +192,7 @@ class LandingWebComponent extends HTMLElement {
     shadow.appendChild(cssReset);
     
     // Estilos base del host (simplificados)
-    const hostStyles = document.createElement('style');
+    /* const hostStyles = document.createElement('style');
     hostStyles.textContent = `
       :host {
         display: block !important;
@@ -213,7 +213,7 @@ class LandingWebComponent extends HTMLElement {
         color: #333333 !important;
         margin: 0 auto !important;
         padding: 0 !important;
-        max-width: 375px !important;
+        max-width: 475px !important;
         border-radius: 0 !important;
         border: none !important;
         box-shadow: none !important;
@@ -223,15 +223,15 @@ class LandingWebComponent extends HTMLElement {
         height: 100%;
         overflow: hidden;
       }
-    `;
+    `; */
     
-    shadow.appendChild(hostStyles);
+    //shadow.appendChild(hostStyles);
     
     // 5. Agregar primero el contenedor maestro de estilos consolidados
-    shadow.appendChild(masterStyleContainer);
+   // shadow.appendChild(masterStyleContainer);
     
     // 6. Luego agregar los estilos básicos del host
-    shadow.appendChild(hostStyles);
+    //shadow.appendChild(hostStyles);
     
     // Contenedor para el punto de montaje con estilos inline completos
     const mountWrapper = document.createElement('div');
@@ -241,8 +241,8 @@ class LandingWebComponent extends HTMLElement {
       display: block !important; 
       width: 100% !important; 
       height: 100% !important; 
-      min-height: 600px !important;
-      max-width: 375px !important;
+      min-height: 100% !important;
+      max-width: 100% !important;
       margin: 0 auto !important;
       font-family: Arial, Helvetica, sans-serif !important;
       box-sizing: border-box !important;
@@ -372,17 +372,18 @@ class LandingWebComponent extends HTMLElement {
       const appContainer = this.shadowRoot.querySelector('.landing-component-container');
       if (appContainer) {
         // Reforzar estilos críticos directamente en el contenedor
-        appContainer.setAttribute('style', 
+        //aqui esta el problema!!!!
+         appContainer.setAttribute('style', 
           'all: initial !important; ' +
           'display: block !important; ' +
           'width: 100% !important; ' + 
           'height: 100% !important; ' +
-          'min-height: 600px !important; ' +
-          'max-width: 375px !important; ' +
+          'min-height: 100% !important; ' +
+          'max-width: 100% !important; ' +
           'margin: 0 auto !important; ' +
           'font-family: Arial, Helvetica, sans-serif !important; ' +
           'box-sizing: border-box !important;'
-        );
+        ); 
       }
     }
     
@@ -477,7 +478,7 @@ class LandingWebComponent extends HTMLElement {
               display: block !important;
               width: 100% !important;
               height: 100% !important;
-              min-height: 600px !important;
+              min-height: 100% !important;
               font-family: Arial, Helvetica, sans-serif !important;
               box-sizing: border-box !important;
             }

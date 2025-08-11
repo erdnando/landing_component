@@ -7,7 +7,7 @@ export const RESPONSIVE_STYLES = `
 /* RESPONSIVE BREAKPOINTS */
 
 /* Smartphones pequeños (320px - 374px) */
-@media screen and (max-width: 374px) {
+/* @media screen and (max-width: 374px) {
   .landing-component-container,
   .basicos-component-container,
   .legales-component-container,
@@ -24,10 +24,10 @@ export const RESPONSIVE_STYLES = `
   .app {
     min-height: var(--height-xs) !important;
   }
-}
+} */
 
 /* Smartphones estándar (375px - 413px) */
-@media screen and (min-width: 375px) and (max-width: 413px) {
+/* @media screen and (min-width: 375px) and (max-width: 413px) {
   .landing-component-container,
   .basicos-component-container,
   .legales-component-container,
@@ -45,7 +45,7 @@ export const RESPONSIVE_STYLES = `
     min-height: var(--height-sm) !important;
   }
 }
-
+ */
 /* Smartphones grandes (414px - 479px) */
 @media screen and (min-width: 414px) and (max-width: 479px) {
   .landing-component-container,
