@@ -8,12 +8,12 @@ export const REQUIREMENTS_STYLES = `
 .requirements-view {
   display: flex !important;
   flex-direction: column !important;
-  min-height: 100vh !important;
-  height: 100vh !important; /* Asegura que ocupe toda la altura disponible */
+  min-height: 98vh !important;
+  height: 98vh !important; /* Asegura que ocupe toda la altura disponible */
   
   /* Fondo blanco con degradado sutil mejorado para mejor balance de colores */
   background: 
-    /* Capa 1: Fondo base blanco */
+    /* Capa 01: Fondo base blanco */
     white,
     /* Capa 2: Degradado sutil azulado para complementar el rosa */
     radial-gradient(circle at center top, rgba(236, 240, 255, 0.7) 0%, transparent 70%),

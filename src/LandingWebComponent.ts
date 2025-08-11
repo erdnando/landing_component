@@ -237,19 +237,17 @@ class LandingWebComponent extends HTMLElement {
     const mountWrapper = document.createElement('div');
     mountWrapper.className = 'landing-mount-wrapper';
     mountWrapper.style.cssText = `
-      all: initial !important; 
-      display: block !important; 
-      width: 100% !important; 
-      height: 100% !important; 
+      display: block !important;
+      width: 100% !important;
+      height: 100% !important;
       min-height: 100% !important;
       max-width: 100% !important;
       margin: 0 auto !important;
       font-family: Arial, Helvetica, sans-serif !important;
       box-sizing: border-box !important;
       overflow: auto !important;
-  background-color: transparent !important;
+      background-color: transparent !important;
       color: white !important;
-      
     `;
     mountWrapper.appendChild(this.mountPoint);
     mountWrapper.part = 'container'; // Expose for external styling
@@ -374,9 +372,8 @@ class LandingWebComponent extends HTMLElement {
         // Reforzar estilos críticos directamente en el contenedor
         //aqui esta el problema!!!!
          appContainer.setAttribute('style', 
-          'all: initial !important; ' +
           'display: block !important; ' +
-          'width: 100% !important; ' + 
+          'width: 100% !important; ' +
           'height: 100% !important; ' +
           'min-height: 100% !important; ' +
           'max-width: 100% !important; ' +

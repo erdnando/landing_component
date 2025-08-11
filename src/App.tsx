@@ -43,9 +43,9 @@ const AppContent: React.FC = () => {
     setCurrentView('requirements');
   };
 
-  const backToPresentation = () => {
+  /* const backToPresentation = () => {
     setCurrentView('presentation');
-  };
+  }; */
 
   const handleContinue = () => {
     alert('¡Proceso completado! Aquí continuaría el flujo...');
@@ -55,8 +55,8 @@ const AppContent: React.FC = () => {
   const appStyle: React.CSSProperties = {
     width: '100%',
     maxWidth: isLoading ? '100vw' : 'min(100vw, 1024px)',
-    height: 'auto',
-    minHeight: '100vh', // Siempre usar 100vh para evitar saltos
+    height: '100% !important',
+    minHeight: '100% !important', // Siempre usar 100vh para evitar saltos
   background: 'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f0f23 100%)',
     margin: '0 auto',
     position: 'relative',

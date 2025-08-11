@@ -29,8 +29,13 @@ export const PRESENTATION_STYLES = `
   color: white !important;
   text-align: center !important;
   padding: var(--content-padding) !important;
-  height: 100% !important;
-  min-height: var(--container-height) !important;
+  /* height: 100% !important;
+  min-height: var(--container-height) !important; */
+
+  min-height: 100% !important;
+  height: 100% !important; 
+
+
   display: flex !important;
   flex-direction: column !important;
   justify-content: flex-start !important;

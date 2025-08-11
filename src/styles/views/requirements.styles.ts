@@ -8,8 +8,10 @@ export const REQUIREMENTS_STYLES = `
 .requirements-view {
   display: flex !important;
   flex-direction: column !important;
-  min-height: 100vh !important;
-  height: 100vh !important; /* Asegura que ocupe toda la altura disponible */
+  min-height: 98vh !important;
+  height: 98vh !important;
+  /* height fijo eliminado para permitir scroll */
+  overflow-y: auto !important;
   
   /* Fondo blanco con degradado sutil mejorado para mejor balance de colores */
   background: 
@@ -31,7 +33,7 @@ export const REQUIREMENTS_STYLES = `
   box-sizing: border-box !important;
   
   /* Formas decorativas sutiles */
-  &::before {
+  .requirements-view::before {
     content: '' !important;
     position: absolute !important;
     width: 300px !important;
@@ -43,8 +45,7 @@ export const REQUIREMENTS_STYLES = `
     z-index: 0 !important;
     filter: blur(40px) !important;
   }
-  
-  &::after {
+  .requirements-view::after {
     content: '' !important;
     position: absolute !important;
     width: 200px !important;
@@ -126,13 +127,12 @@ export const REQUIREMENTS_STYLES = `
   z-index: 1 !important;
   backdrop-filter: blur(4px) !important;
   -webkit-backdrop-filter: blur(4px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important; /* Borde sutil */
-  transform: perspective(500px) rotateY(-5deg) !important; /* Efecto 3D sutil */
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  transform: perspective(500px) rotateY(-5deg) !important;
   transition: transform 0.3s ease !important;
-  
-  &:hover {
-    transform: perspective(500px) rotateY(0deg) !important;
-  }
+}
+.card-mini-modern:hover {
+  transform: perspective(500px) rotateY(0deg) !important;
 }
 
 .card-chip-mini {
@@ -501,7 +501,7 @@ export const REQUIREMENTS_STYLES = `
   }
   
   .requirements-btn {
-    padding: 12px 25px !important;
+    margin-top: auto !important;
     font-size: 0.95rem !important;
     min-width: 160px !important;
   }
@@ -514,6 +514,10 @@ export const REQUIREMENTS_STYLES = `
 
 /* Tabletas y pantallas más grandes */
 @media screen and (min-width: 768px) {
+    /* Mantener siempre visible al fondo */
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 5 !important;
   .requirements-cards {
     max-width: 500px !important;
     margin-left: auto !important;
