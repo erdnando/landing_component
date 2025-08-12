@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// ESTILOS CONSOLIDADOS: Ya no se importan CSS individuales
-// Todos los estilos están consolidados en microfrontend-styles.ts
 import { AppProvider, useAppContext } from './core/context/AppContext';
 import PresentationView from './components/presentation/PresentationView';
 import { RequirementsView } from './components/requirements/RequirementsView';
@@ -55,9 +53,11 @@ const AppContent: React.FC = () => {
   const appStyle: React.CSSProperties = {
     width: '100%',
     maxWidth: isLoading ? '100vw' : 'min(100vw, 1024px)',
-    height: '100% !important',
-    minHeight: '100% !important', // Siempre usar 100vh para evitar saltos
-  background: 'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f0f23 100%)',
+    height: '100vh',
+    minHeight: '100vh',
+    background: currentView === 'requirements' 
+      ? 'transparent' // Sin fondo para RequirementsView para permitir su fondo blanco
+      : 'linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f0f23 100%)',
     margin: '0 auto',
     position: 'relative',
     overflowX: 'hidden',
@@ -67,7 +67,7 @@ const AppContent: React.FC = () => {
     boxSizing: 'border-box',
     fontFamily: 'Arial, sans-serif',
     color: 'white',
-    transition: 'background 0.8s ease-out', // Transición más rápida y directa
+    transition: 'background 0.8s ease-out',
   };
 
   return (

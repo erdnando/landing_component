@@ -1,15 +1,11 @@
 {
   "name": "landing-component",
   "version": "1.0.0",
-  "description": "Landing Page Component - Bradescard Promoda",
-  "main": "dist/landing-v1.0.0.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist/",
-    "src/",
-    "public/index.html"
-  ],
+  "description": "Landing Page Component - Bradescard Promoda - React App",
+  "main": "dist/index.js",
+  "homepage": ".",
   "scripts": {
+    "start": "webpack serve --mode development --open",
     "build": "webpack --mode production",
     "dev": "webpack serve --mode development --open",
     "lint": "eslint src --ext .ts,.tsx",
